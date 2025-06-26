@@ -1,0 +1,113 @@
+{
+    "botinfos": {
+    "dev": "Udvikler",
+    "users": "Brugere",
+    "servers": "Servere",
+    "uptime": "Køretid",
+    "support": "Supportserver",
+    "here": "Her"
+    },
+    "panel": {
+    "editing": "Redigering:",
+    "currentkey": "Nuværende nøgle:",
+    "currentrole": "Nuværende rolle:",
+    "currenttime": "Nuværende varighed:",
+    "editrole": "Klik på <:role:1109298034019405926> for at redigere nøglerollen",
+    "editkey": "Klik på <:key:1109298417081012284> for at generere en ny unik nøgle",
+    "edittime": "Klik på <:time:1109299201583628380> for at redigere nøgletiden",
+    "deletekey": "Klik på <:delete:1109518926708228136> for at slette nøglen (kan ikke gendannes)",
+    "sendroles": "Send rollens ID eller nævn den i denne kanal.",
+    "invalidrole": "Ugyldig rolle.",
+    "uniquecodeedited": "Unik kode for nøglen er blevet ændret.",
+    "sendnewkeytime": "Send den nye nøgletid (eksempler: 24h for 24 timer, 20d for 20 dage)",
+    "keydatadeleted": "Nøgledata er blevet slettet. Henter nye data til panelet...",
+    "keyspaneltitle": "Nøglepanel",
+    "keyspaneldesc": "Her kan du administrere dine nøgler. Vælg den nøgle, du vil administrere."
+    },
+    "deleteall": {
+    "nokey": "Der er ingen nøgle i databasen.",
+    "keyreset": "Nøgle nulstillet",
+    "alldeleted": "Alle nøgler er blevet slettet."
+    },
+    "generate": {
+    "maxkeys": "Du har genereret det maksimale tilladte antal nøgler.",
+    "invalid": "Licensnøgleens tid er ugyldig. Eksempel: 1d for 1 dag, 1y for 1 år, 2h for 2 timer eller 3m for 3 minutter.",
+    "btn": "Klik her, hvis du ikke kan kopiere nøglen",
+    "keygen": "Generering af nøgle",
+    "words": ["Nøgle", "Rolle", "Tid"],
+    "sent": "Nøgle sendt i privat besked."
+    },
+    "help": {
+    "words": ["Licens", "Tilladelse", "Navn", "Kategori", "Informationer", "Beskrivelse"]
+    },
+    "infos": {
+    },
+    "invite": {
+        "invite": "Tilføj vores bot ved at klikke på knappen nedenfor."
+    },
+    "logs": {
+        "ch": "{{sl}}-kanalen er blevet indstillet til logs"
+    },
+    "ping": {
+    
+    },
+    "redeem": {
+        "invalidkey": "Denne nøgle er ugyldig.",
+        "redeem": "Indløsning af nøgle",
+        "role": "Rolle tilføjet",
+        "redeemed": "Nøgle indløst:",
+        "dms": "Glem ikke at aktivere dine private beskeder!",
+        "expired": "Din licensnøgle er udløbet, og rollen {{rr}} er blevet fjernet fra dig.",
+        "exptitle": "Udløbet nøgle"
+    },
+    "remove": {
+        "remove": "Sletning af nøgle"
+    },
+    "uptime": {
+        "online": "Jeg har været online siden"
+    },
+    "lang": {
+        "updated": "Botens sprog er blevet ændret til dansk.",
+        "already": "Boten er allerede indstillet til dansk."
+    },
+    "antispam": {
+        "activated": "Antispam er blevet aktiveret.",
+        "alreadyact": "Antispam er allerede aktiveret.",
+        "desactivated": "Antispam er blevet deaktiveret.",
+        "alreadydesact": "Antispam er allerede deaktiveret.",
+        "nopremium": "Denne server har ikke premium"
+    },
+    "giveaway": {
+        "gwended": "Licens-giveaway er afsluttet!",
+        "gwendtime": "Slutdato:",
+        "dropMessage": "Vær den første til at reagere med",
+        "inviteToParticipate": "Reager med 🔑 for at deltage i licens-giveawayen!",
+        "winMessage": "Tillykke, {wwww}! Du har vundet rollen **{{rrrrrr}}**! \nLicensnøglen til rollen er blevet sendt til dig i en privat besked.",
+        "noWinner": "Konkurrencen er annulleret på grund af utilstrækkeligt antal deltagere.",
+        "hostedBy": "Arrangeret af:",
+        "winners": "Vindere",
+        "endedAt": "Sluttede kl.",
+        "wsend": "Du har vundet gaven på serveren {{gnn}}\nHer er din licensnøgle: {{kkkk}}\nBrug {{cmddd}} for at få din rolle."
+    },
+    "events": {
+        "permission": "Du har ikke de nødvendige tilladelser.",
+        "attempt": "Forsøg på at omgå tilladelser",
+        "descattempt": "Medlemmet {{usrtag}} forsøgte at køre kommandoen {{cmdname}} uden de nødvendige tilladelser: {{perm}}",
+        "generated": "En ny licensnøgle blev genereret af",
+        "redeemed": "En ny licensnøgle blev indløst af",
+        "removed": "En ny licensnøgle blev fjernet af",
+        "mention": "Hej, jeg er Licensy\nMin præfiks er `/`\nJeg bruger slash-kommandoer!",
+        "avert": "du sender beskeder for hurtigt.",
+        "kickspam": "er blevet sparket ud for spam!"
+    },
+    "owners": {
+        "notserverowner": "Kun serverens ejer kan administrere ejere.",
+        "notinownerlist": "Du er ikke på ejerlisten.",
+        "alreadyadded": "er allerede på ejerlisten.",
+        "added": "er blevet tilføjet til ejerlisten.",
+        "notowner": "er ikke på ejerlisten.",
+        "removed": "er blevet fjernet fra ejerlisten.",
+        "none": "Ingen.",
+        "owner": "ejere"
+    }
+    }

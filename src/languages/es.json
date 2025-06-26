@@ -1,0 +1,114 @@
+{
+    "botinfos": {
+        "dev": "Desarrollador",
+        "users": "Usuarios",
+        "servers": "Servidores",
+        "uptime": "Tiempo de actividad",
+        "support": "Ayuda",
+        "here": "Aquí"
+    },
+    "panel": {
+        "editing": "Edición:",
+        "currentkey": "Clave actual:",
+        "currentrole": "Rol actual:",
+        "currenttime": "Duración actual:",
+        "editrole": "Haz clic en <:role:1109298034019405926> para editar el rol de la llave",
+        "editkey": "Haz clic en <:key:1109298417081012284> para generar una nueva clave única",
+        "edittime": "Haz clic en <:time:1109299201583628380> para editar la hora de la llave",
+        "deletekey": "Haz clic en <:delete:1109518926708228136> para eliminar la llave (irreversible)",
+        "sendroles": "Envía el ID del rol, o menciónalo en este canal.",
+        "invalidrole": "Rol inválido.",
+        "uniquecodeedited": "Código único de la llave editado.",
+        "sendnewkeytime": "Envía la nueva duración de la llave (ejemplos: 24h para 24 horas, 20d para 20 días)",
+        "keydatadeleted": "Datos de la clave eliminados.\nCargando los nuevos datos al panel...",
+        "keyspaneltitle": "Panel de llaves",
+        "keyspaneldesc": "Aquí puedes gestionar tus llaves.\nSelecciona la llave que deseas gestionar."
+    }, 
+    "deleteall": {
+        "nokey": "No hay ninguna clave en la base de datos.",
+        "keyreset": "Restablecer llave",
+        "alldeleted": "Todas las claves se han borrado correctamente."
+    },
+    "generate": {
+        "maxkeys": "Ha generado el máximo de claves permitidas.",
+        "invalid": "La hora de la clave de licencia no es válida.\nEjemplo: `1d para 1 día`, `1y para 1 año`, `2h para 2 horas` **o** `3m para 3 minutos`.",
+        "btn": "Haz clic en mí si no puedes copiar la clave",
+        "keygen": "Generar clave",
+        "words": ["Clave", "Papel", "Tiempo"],
+        "sent": "Clave enviada en mensajes privados."
+    },
+    "help": {
+        "words": ["Licencia", "Permiso", "Nombre", "Categoría", "Información", "Descripción"]
+    },
+    "infos": {
+
+    },
+    "invite": {
+        "invite": "Añade nuestro bot haciendo clic en el botón de abajo"
+    },
+    "logs": {
+        "ch": "El canal {{sl}} se ha ajustado a los registros"
+    },
+    "ping": {
+
+    },
+    "redeem": {
+        "invalidkey": "Esta clave no es válida.",
+        "redeem": "Clave redimir",
+        "role": "Función añadida",
+        "redeemed": "Llave canjeada",
+        "dms": "No olvides activar tus mensajes privados.",
+        "expired": "Su clave de licencia ha caducado y se le ha eliminado el rol {{rr}}.",
+        "exptitle": "Llave caducada"
+    },
+    "remove": {
+        "remove": "Llave Quitar"
+    },
+    "uptime": {
+        "online": "Estoy en línea desde"
+    },
+    "lang": {
+        "updated": "El idioma del bot se ha cambiado a español.",
+        "already": "El bot ya está en español."
+    },
+    "antispam": {
+        "activated": "El antispam se ha activado correctamente.",
+        "alreadyact": "El antispam ya está habilitado.",
+        "desactivated": "El antispam se ha desactivado correctamente.",
+        "alreadydesact": "El antispam ya está deshabilitado.",
+        "nopremium": "Este servidor no tiene la prima."
+    },
+    "giveaway": {
+        "gwended": "¡El sorteo de licencias terminó!",
+        "gwendtime": "Hora de finalización:",
+        "dropMessage": "Sé el primero en reaccionar con",
+        "inviteToParticipate": "¡Reaccione con 🔑 para participar en el sorteo de la licencia!",
+        "winMessage": "¡Felicitaciones, {wwww}! ¡Ganaste el rol **{{rrrrrr}}**!\nLa licencia del rol te ha sido enviada en mensajes privados.",
+        "noWinner": "Sorteo cancelado, no hay suficientes participaciones.",
+        "hostedBy": "Alojado por:",
+        "winners": "Ganador",
+        "endedAt": "Terminó en",
+        "wsend": "Ganaste el sorteo del gremio {{gnn}}\nAquí está tu clave de licencia: {{kkkk}}\nUsa {{cmddd}} para obtener tu rol."
+    },
+    "events": {
+        "permission": "No tienes el permiso necesario.",
+        "attempt": "Intento sin permiso",
+        "redeemed": "Una nueva clave de licencia ha sido canjeada por",
+        "descattempt": "El miembro {{usrtag}} intentó ejecutar el comando {{cmdname}} sin tener el permiso requerido: {{perm}}",
+        "generated": "Una nueva clave de licencia ha sido generada por",
+        "removed": "Una nueva clave de licencia ha sido canjeada por",
+        "mention": "Hola, soy Licensy\nMi prefijo es `/`\n¡Estoy usando comandos de barra!",
+        "avert": "envías mensajes demasiado rápido.",
+        "kickspam": "fue pateado por spam!"
+    },
+    "owners": {
+        "notserverowner": "Solo el propietario del servidor puede administrar a los propietarios.",
+        "notinownerlist": "No estás en la lista de propietarios.",
+        "alreadyadded": "ya está en la lista de propietarios.",
+        "added": "ha sido agregado a la lista de propietarios.",
+        "notowner": "no está en la lista de propietarios.",
+        "removed": "ha sido eliminado de la lista de propietarios.",
+        "none": "Ninguno.",
+        "owner": "Propietarios"
+    }
+}

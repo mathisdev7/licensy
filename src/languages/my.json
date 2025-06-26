@@ -1,0 +1,114 @@
+{
+    "botinfos": {
+        "dev": "Pembangun",
+        "users": "Pengguna",
+        "servers": "Pelayan",
+        "uptime": "uptime",
+        "support": "Sokongan",
+        "here": "Di sini"
+    },
+    "panel": {
+        "editing": "Penyuntingan:",
+        "currentkey": "Kunci semasa:",
+        "currentrole": "Peranan semasa:",
+        "currenttime": "Tempoh semasa:",
+        "editrole": "Klik pada <:role:1109298034019405926> untuk mengedit peranan kunci",
+        "editkey": "Klik pada <:key:1109298417081012284> untuk menghasilkan kunci unik baru",
+        "edittime": "Klik pada <:time:1109299201583628380> untuk mengedit masa kunci",
+        "deletekey": "Klik pada <:delete:1109518926708228136> untuk menghapus kunci (tidak dapat dikembalikan)",
+        "sendroles": "Hantar ID peranan, atau sebutkannya di saluran ini.",
+        "invalidrole": "Peranan tidak sah.",
+        "uniquecodeedited": "Kod unik kunci telah diedit.",
+        "sendnewkeytime": "Hantar tempoh baru kunci (contoh: 24h untuk 24 jam, 20d untuk 20 hari)",
+        "keydatadeleted": "Data kunci dihapuskan.\nMemuat naik data baru ke panel...",
+        "keyspaneltitle": "Panel Kunci",
+        "keyspaneldesc": "Di sini anda boleh menguruskan kunci anda.\nPilih kunci yang ingin anda uruskan."
+    }, 
+    "deleteall": {
+        "nokey": "Tiada kunci dalam pangkalan data.",
+        "keyreset": "Set Semula Kekunci",
+        "alldeleted": "Semua kunci telah berjaya dipadamkan."
+    },
+    "generate": {
+        "maxkeys": "Anda telah menjana maksimum kunci yang dibenarkan.",
+        "invalid": "Masa kunci lesen tidak sah.\nContoh: `1h untuk 1 hari`, `1t untuk 1 tahun`, `2j untuk 2 jam` **atau** `3m untuk 3 minit`.",
+        "btn": "Klik saya jika anda tidak boleh menyalin kunci",
+        "keygen": "Jana Kunci",
+        "perkataan": ["Kunci", "Peranan", "Masa"],
+        "sent": "Kunci dihantar dalam mesej peribadi."
+    },
+    "help": {
+        "words": ["Lesen", "Kebenaran", "Nama", "Kategori", "Maklumat", "Perihalan"]
+    },
+    "infos": {
+
+    },
+    "invite": {
+        "invite": "Tambah bot kami dengan mengklik butang di bawah"
+    },
+    "logs": {
+        "ch": "Saluran {{sl}} telah ditetapkan kepada log"
+    },
+    "ping": {
+
+    },
+    "redeem": {
+        "invalidkey": "Kunci ini tidak sah.",
+        "redeem": "Penebusan Kunci",
+        "role": "Peranan Ditambah",
+        "redeemed": "Kunci Ditebus",
+        "dms": "Jangan lupa untuk mendayakan mesej peribadi anda!",
+        "expired": "Kunci lesen anda telah tamat tempoh dan peranan {{rr}} telah dialih keluar kepada anda.",
+        "exptitle": "Kunci Tamat Tempoh"
+    },
+    "remove": {
+        "remove": "Kekunci Keluarkan"
+    },
+    "uptime": {
+        "online": "Saya dalam talian sejak"
+    },
+    "lang": {
+        "updated": "Bahasa bot telah ditetapkan kepada bahasa Inggeris.",
+        "already": "Bot sudah dalam bahasa Inggeris."
+    },
+    "antispam": {
+        "activated": "Antispam telah berjaya diaktifkan.",
+        "alreadyact": "Antispam sudah didayakan.",
+        "desactivated": "Antispam telah berjaya dilumpuhkan.",
+        "alreadydesact": "Antispam sudah dilumpuhkan.",
+        "nopremium": "Pelayan ini tidak mempunyai premium"
+    },
+    "giveaway": {
+        "gwended": "Pemberian Lesen Tamat!",
+        "gwendtime": "Masa Berakhir:",
+        "dropMessage": "Jadilah yang pertama untuk bertindak balas",
+        "inviteToParticipate": "Bertindak balas dengan 🔑 untuk menyertai pemberian lesen!",
+        "winMessage": "Tahniah, {wwww}! Anda memenangi peranan **{{rrrrrr}}**!\n Lesen peranan telah dihantar kepada anda dalam mesej peribadi.",
+        "noWinner": "Giveaway dibatalkan, penyertaan tidak mencukupi.",
+        "hostedBy": "Dianjurkan oleh:",
+        "winners": "Pemenang",
+        "endedAt": "Berakhir pada",
+        "wsend": "Anda memenangi hadiah persatuan {{gnn}}\nBerikut ialah kunci lesen anda: {{kkkk}}\nGunakan {{cmddd}} untuk mendapatkan peranan anda."
+    },
+    "events": {
+        "permission": "Anda tidak mempunyai kebenaran yang diperlukan.",
+        "attempt": "Percubaan tanpa kebenaran",
+        "descattempt": "Ahli {{usrtag}} cuba menjalankan arahan {{cmdname}} tanpa mendapat kebenaran yang diperlukan: {{perm}}",
+        "generated": "Kunci lesen baharu telah dijana oleh",
+        "removed": "Kunci lesen baharu telah ditebus oleh",
+        "redeemed": "Kunci lesen baharu telah ditebus oleh",
+        "mention": "Hei, saya Licensy\nAwalan saya ialah `/`\nSaya menggunakan arahan slash!",
+        "avert": "anda menghantar mesej terlalu cepat.",
+        "kickspam": "telah ditendang kerana spam!"
+    },
+    "owners": {
+        "notserverowner": "Hanya pemilik pelayan boleh menguruskan pemiliknya.",
+        "notinownerlist": "Anda tiada dalam senarai pemilik.",
+        "alreadyadded": "sudah ada dalam senarai pemilik.",
+        "added": "telah ditambahkan pada senarai pemilik.",
+        "notowner": "tiada dalam senarai pemilik.",
+        "removed": "telah dialih keluar daripada senarai pemilik.",
+        "none": "Tiada.",
+        "owner": "Pemilik"
+    }
+}

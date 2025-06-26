@@ -1,0 +1,114 @@
+{
+    "botinfos": {
+        "dev": "Entwickler",
+        "users": "Utenti",
+        "servers": "Server",
+        "uptime": "Tempo di attività",
+        "support": "Supporto",
+        "here": "Qui"
+    },
+    "panel": {
+        "editing": "Modifica:",
+        "currentkey": "Chiave attuale:",
+        "currentrole": "Ruolo attuale:",
+        "currenttime": "Durata attuale:",
+        "editrole": "Clicca su <:role:1109298034019405926> per modificare il ruolo della chiave",
+        "editkey": "Clicca su <:key:1109298417081012284> per generare una nuova chiave unica",
+        "edittime": "Clicca su <:time:1109299201583628380> per modificare l'ora della chiave",
+        "deletekey": "Clicca su <:delete:1109518926708228136> per eliminare la chiave (irreversibile)",
+        "sendroles": "Invia l'ID del ruolo o menzionarlo in questo canale.",
+        "invalidrole": "Ruolo non valido.",
+        "uniquecodeedited": "Codice unico della chiave modificato.",
+        "sendnewkeytime": "Invia la nuova durata della chiave (esempi: 24h per 24 ore, 20d per 20 giorni)",
+        "keydatadeleted": "Dati della chiave eliminati.\nCaricamento dei nuovi dati nel pannello...",
+        "keyspaneltitle": "Pannello delle chiavi",
+        "keyspaneldesc": "Qui puoi gestire le tue chiavi.\nSeleziona la chiave che desideri gestire."
+    }, 
+    "deleteall": {
+        "nokey": "Non c'è nessuna chiave nel database.",
+        "keyreset": "Reset dei tasti",
+        "alldeleted": "Tutte le chiavi sono state eliminate con successo."
+    },
+    "generate": {
+        "maxkeys": "Hai generato il numero massimo di chiavi consentite.",
+        "invalid": "L'ora della chiave di licenza non è valida.\nEsempio: `1d per 1 giorno`, `1y per 1 anno`, `2h per 2 ore` **o** `3m per 3 minuti`.",
+        "btn": "Cliccate su di me se non riuscite a copiare la chiave",
+        "keygen": "Generazione di chiavi",
+        "words": ["Chiave", "Ruolo", "Tempo"],
+        "sent": "Chiave inviata nei messaggi privati."
+    },
+    "help": {
+        "words": ["Licenza", "Autorizzazione", "Nome", "Categoria", "Informazioni", "Descrizione"]
+    },
+    "infos": {
+
+    },
+    "invite": {
+        "invite": "Aggiungete il nostro bot cliccando sul pulsante qui sotto"
+    },
+    "logs": {
+        "ch": "Il canale {{sl}} è stato impostato sui registri"
+    },
+    "ping": {
+
+    },
+    "redeem": {
+        "invalidkey": "Questa chiave non è valida.",
+        "redeem": "Riscatto chiave",
+        "role": "Ruolo aggiunto",
+        "redeemed": "Chiave riscattata",
+        "dms": "Non dimenticate di attivare i messaggi privati!",
+        "expired": "La chiave di licenza è scaduta e il ruolo {{rr}} è stato rimosso.",
+        "exptitle": "Chiave scaduta"
+    },
+    "remove": {
+        "remove": "Chiave Rimuovi"
+    },
+    "uptime": {
+        "online": "Sono online da"
+    },
+    "lang": {
+        "updated": "La lingua del bot è stata cambiata in italiano.",
+        "already": "Il bot è già in italiano."
+    },
+    "antispam": {
+        "activated": "L'antispam è stato attivato con successo.",
+        "alreadyact": "L'antispam è già abilitato.",
+        "desactivated": "L'antispam è stato disabilitato con successo.",
+        "alreadydesact": "L'antispam è già disabilitato.",
+        "nopremium": "Questo server non ha il premio"
+    },
+    "giveaway": {
+        "gwended": "L'omaggio della licenza è terminato!",
+        "gwendtime": "Ora di fine:",
+        "dropMessage": "Sii il primo a reagire con",
+        "inviteToParticipate": "Reagisci con 🔑 per partecipare al giveaway della licenza!",
+        "winMessage": "Congratulazioni, {wwww}! Hai vinto il ruolo ** {{rrrrrr}} **!\nLa licenza del ruolo ti è stata inviata in messaggi privati.",
+        "noWinner": "Giveaway annullato, poche partecipazioni.",
+        "hostedBy": "Ospitato da:",
+        "winners": "Vincitore",
+        "endedAt": "Finito alle",
+        "wsend": "Hai vinto l'omaggio della gilda {{gnn}}\nEcco la tua chiave di licenza: {{kkkk}}\nUsa {{cmddd}} per ottenere il tuo ruolo."
+    },
+    "events": {
+        "permission": "Non avete l'autorizzazione necessaria.",
+        "attempt": "Tentativo non autorizzato",
+        "descattempt": "Il membro {{usrtag}} ha tentato di eseguire il comando {{cmdname}} senza avere i permessi richiesti: {{perm}}",
+        "generated": "Una nuova chiave di licenza è stata generata da",
+        "removed": "Una nuova chiave di licenza è stata riscattata da",
+        "mention": "Salve, sono Licensy\nIl mio prefisso è `/`\nSto usando i comandi slash!",
+        "redeemed": "Una nuova chiave di licenza è stata riscattata da",
+        "avert": "invii messaggi troppo velocemente.",
+        "kickspam": "è stato cacciato per spam!"
+    },
+    "owners": {
+        "notserverowner": "Solo il proprietario del server può gestire i proprietari.",
+        "notinownerlist": "Non sei nell'elenco dei proprietari.",
+        "alreadyadded": "è già nell'elenco dei proprietari.",
+        "added": "è stato aggiunto all'elenco dei proprietari.",
+        "notowner": "non è nell'elenco dei proprietari.",
+        "removed": "è stato rimosso dall'elenco dei proprietari.",
+        "none": "Nessuno.",
+        "owner": "Proprietari"
+    }
+}

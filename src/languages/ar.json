@@ -1,0 +1,110 @@
+{
+    "botinfos": {
+        "dev": "Mutawir",
+        "users": "almustakhdimuna",
+        "servers": "alkhawadm",
+        "uptime": "waqat altashghili",
+        "support": "Yadeam",
+        "here": "Huna"
+    },
+    "panel": {
+        "editing": "Tahreer:",
+        "currentkey": "Al-miftaah al-haali",
+        "currentrole": "Ad-dawr al-haali",
+        "currenttime": "Al-muddah al-haali",
+        "editrole": "Anqur 'ala <:role:1109298034019405926> li-ta'deel dawr al-miftaah",
+        "editkey": "Anqur 'ala <:key:1109298417081012284> li-'insha' miftaah jadidun fareed",
+        "edittime": "Anqur 'ala <:time:1109299201583628380> li-ta'deel waqt al-miftaah",
+        "deletekey": "Anqur 'ala <:delete:1109518926708228136> li-hazf al-miftaah (la yumkinu al-istirja)",
+        "sendroles": "Arsil hawiyat ad-dawr, aw qum bidhikrihi fi hadhihi al-qiinah",
+        "invalidrole": "Dawr ghayr sahih.",
+        "uniquecodeedited": "Tama ta'deel ar-rmz al-fareed li-lmiftaah",
+        "sendnewkeytime": "Arsil muddat al-miftaah al-jadidah (amthal: 24h limuddah 24 saa'ah, 20d limuddah 20 yawman",
+        "keydatadeleted": "tama hadhf bayanat almiftahi.\ntahmil albayanat aljadidat 'iilaa allawha...",
+        "keyspaneltitle": "Lawhat al-mafatih",
+        "keyspaneldesc": "yumkinuk huna 'iidarat almafatih alkhasat bika.\nhadad almiftah aladhi turid 'iidaratah"
+    }, 
+    "deleteall": {
+        "nokey": "la yujad miftah fi qaeidat albayanati.",
+        "keyreset": "Miftah 'iieadat altaeyin",
+        "alldeleted": "tama hadhf jamie almafatih binajahi."
+    },
+    "generate": {
+        "maxkeys": "laqad qumt bi'iinsha' alhadi al'aqsaa min almafatih almasmuh biha.",
+        "invalid": "waqat miftah altarkhis ghayr salihin.\nmithali:` 1 yawm liawm wahidi` , `1 s limudat eam wahid` ,` 2 s limudat saeatayn` ** 'aw ** `3 d limudat 3 daqayiqu`",
+        "btn": "anqir fawqi 'iidha kunt la tastatie nuskh almiftahi",
+        "keygen": "'iinsha' almiftahi",
+        "words": ["almiftahi", "alduwr", "aluqt"],
+        "sent": "tama 'iirsal almiftah fi alrasayil alkhasati."
+    },
+    "help": {
+        "words": ["altarkhisi", "al'iidhni", "aliasma", "alfiati", "almaelumati", "alwsf"]
+    },
+    "infos": {},
+    "invite": {
+        "invite": "adif barnamaj alruwbut alkhasi bina bialnaqr fawq alziri almawjud fi al'asfal"
+    },
+    "logs": {
+        "ch": "tama taeyin alqana {{sl}} ealaa alsijalati"
+    },
+    "ping": {},
+    "redeem": {
+        "invalidkey": "hadha almiftah ghayr salih.",
+        "redeem": "Miftah Aliastirdad",
+        "role": "tamat 'iidafat aldawri",
+        "redeemed": "tama astirdad almiftahi",
+        "dms": "la tans tamkin rasayilik alkhasati!",
+        "expired": "antahat salahiat miftah altarkhis alkhasi bik watamat 'iizalat aldawr {{rr}} 'iilik.",
+        "exptitle": "miftah muntahi alsalahiati"
+    },
+    "remove": {
+        "remove": "'iizalat almiftahi"
+    },
+    "uptime": {
+        "online": "'ana mutasil mundh dhalik alhini"
+    },
+    "lang": {
+        "updated": "tama dabt lughat alruwbut ealaa allughat al'iinjiliziati.",
+        "already": "alrubut mawjud biallughat al'iinjiliziat bialfieal."
+    },
+    "antispam": {
+        "activated": "tama tanshit mukafahat albarid aleashwayiyi binajahi.",
+        "alreadyact": "tama tamkin mukafahat albarid aleashwayiyi bialfieli.",
+        "desactivated": "tama binajah mukafahat albarid aleashwayiyi",
+        "alreadydesact": "tama taetil mukafahat albarid aleashwayiyi bialfieli.",
+        "nopremium": "hadha alkhadim lays ladayh qist"
+    },
+    "giveaway": {
+        "gwended": "aintiha' alhibat altarkhisu!",
+        "gwendtime": "nihayat alwaqti:",
+        "dropMessage": "kun 'awal man yatafaeal mae 🔑!",
+        "inviteToParticipate": "tafaeal mae 🔑 lilmusharakat fi manh altarkhisi!",
+        "winMessage": "tahanina , {wwww}! laqad fizt bialdawr **{{rrrrrr}}**! \ntama 'iirsal tarkhis aldawr 'iilayk fi rasayil khasatin.",
+        "noWinner": "tama 'iilgha' alhibat , la tujad musharakat kafiatun.",
+        "hostedBy": "birieayatin:",
+        "winners": "alfayiz",
+        "endedAt": "aintahaa fi",
+        "wsend": "laqad rabihat alhibat min alniqaba {{gnn}}\nhuna miftah altarkhis alkhasi bika: {{kkkk}}\nyustakhdam {{cmddd}} lilhusul ealaa dawriki."
+    },
+    "events": {
+        "permission": "lays ladayk al'iidhn almatluba.",
+        "attempt": "muhawalat bidun 'iidhni",
+        "descattempt": "hawil aleudw {{usrtag}} tashghil al'amr {{cmdname}} dun alhusul ealaa al'iidhn almatlubi: {{perm}}",
+        "generated": "tama 'iinsha' miftah tarkhis jadid biwasitati",
+        "removed": "tima astirdad miftah tarkhis jadid biwasitati",
+        "redeemed": "tama astirdad miftah tarkhis jadid biwasita",
+        "mention": "mrhban، 'ana Licensy\nalbadiat alkhasat bi hi `/`\n'ana 'astakhdim 'awamir alshurtat almayilati!",
+        "avert": "taqum bi'iirsal alrasayil bisureat kabiratin.",
+        "kickspam": "tama tarduh bisabab alrasayil ghayr almarghub fiha!"
+    },
+    "owners": {
+        "notserverowner": "yumkin faqat limalik alkhadim 'iidarat almalikin.",
+        "notinownerlist": "last fi qayimat almalikin.",
+        "alreadyadded": "mawjud bialfiel fi qayimat almalikin.",
+        "added": "tamat 'iidafatuh 'iilaa qayimat almalikin.",
+        "notowner": "lays fi qayimat almalikin.",
+        "removed": "tamat 'iizalat min qayimat almaliki.",
+        "none": "la 'ahada.",
+        "owner": "'ashab"
+    }
+}

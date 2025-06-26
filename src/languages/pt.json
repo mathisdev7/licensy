@@ -1,0 +1,114 @@
+{
+    "botinfos": {
+        "dev": "Desenvolvedor",
+        "users": "Utilizadores",
+        "servers": "Servidores",
+        "uptime": "Tempo de funcionamento",
+        "support": "Apoio",
+        "here": "Aqui"
+    },
+    "panel": {
+        "editing": "Edição:",
+        "currentkey": "Chave atual:",
+        "currentrole": "Papel atual:",
+        "currenttime": "Duração atual:",
+        "editrole": "Clique em <:role:1109298034019405926> para editar o papel da chave",
+        "editkey": "Clique em <:key:1109298417081012284> para gerar uma nova chave única",
+        "edittime": "Clique em <:time:1109299201583628380> para editar o tempo da chave",
+        "deletekey": "Clique em <:delete:1109518926708228136> para excluir a chave (irreversível)",
+        "sendroles": "Envie o ID do cargo, ou mencione-o neste canal.",
+        "invalidrole": "Cargo inválido.",
+        "uniquecodeedited": "Código único da chave editado.",
+        "sendnewkeytime": "Envie a nova duração da chave (exemplos: 24h para 24 horas, 20d para 20 dias)",
+        "keydatadeleted": "Dados da chave apagados.\nCarregando os novos dados para o painel...",
+        "keyspaneltitle": "Painel de chaves",
+        "keyspaneldesc": "Aqui você pode gerenciar suas chaves.\nSelecione a chave que deseja gerenciar."
+    }, 
+    "deleteall": {
+        "nokey": "Não há nenhuma chave na base de dados.",
+        "keyreset": "Reinicialização da chave",
+        "alldeleted": "Todas as chaves foram apagadas com sucesso."
+    },
+    "generate": {
+        "maxkeys": "Você gerou o máximo de chaves permitido.",
+        "invalid": "A hora da chave de licença é inválida.\nExemplo: `1d durante 1 dia`, `1y durante 1 ano`, `2h durante 2 horas` **ou** `3m durante 3 minutos`.",
+        "btn": "Clique em mim se não conseguir copiar a chave",
+        "keygen": "Gerar chave",
+        "words": ["Chave", "Papel", "Tempo"],
+        "sent": "Chave enviada em mensagens privadas."
+    },
+    "help": {
+        "words": ["Licença", "Autorização", "Nome", "Categoria", "Informações", "Descrição"]
+    },
+    "infos": {
+
+    },
+    "invite": {
+        "invite": "Adicione o nosso bot clicando no botão em baixo"
+    },
+    "logs": {
+        "ch": "O canal {{{sl}} foi definido para os registos"
+    },
+    "ping": {
+
+    },
+    "redeem": {
+        "invalidkey": "Esta chave é inválida.",
+        "redeem": "Resgate de chaves",
+        "role": "Função adicionada",
+        "redeemed": "Chave redimida",
+        "dms": "Não se esqueça de activar as suas mensagens privadas!",
+        "expired": "A sua chave de licença expirou e o papel {{{rr}} foi-lhe retirado.",
+        "exptitle": "Chave Expirada"
+    },
+    "remove": {
+        "remove": "Retirar a chave"
+    },
+    "uptime": {
+        "online": "Estou online desde"
+    },
+    "lang": {
+        "updated": "A língua do bot foi alterada para português.",
+        "already": "O bot já está em português."
+    },
+    "antispam": {
+        "activated": "O antispam foi ativado com sucesso.",
+        "alreadyact": "O antispam já está ativado.",
+        "desactivated": "O antispam foi desativado com sucesso.",
+        "alreadydesact": "O antispam já está desativado.",
+        "nopremium": "Este servidor não tem o premium"
+    },
+    "giveaway": {
+        "gwended": "Oferta de licença encerrada!",
+        "gwendtime": "Hora de término:",
+        "dropMessage": "Seja o primeiro a reagir com",
+        "inviteToParticipate": "Reaja com 🔑 para participar do sorteio da licença!",
+        "winMessage": "Parabéns, {wwww}! Você ganhou a função **{{rrrrrr}}**!\nlicença da função foi enviada para você em mensagens privadas.",
+        "noWinner": "Sorteio cancelado, não há participações suficientes.",
+        "hostedBy": "Hospedado por:",
+        "winners": "Ganhador",
+        "endedAt": "Terminou em",
+        "wsend": "Você ganhou o sorteio da guilda {{gnn}}\nAqui está sua chave de licença: {{kkkk}}\nUsar {{cmddd}} para obter sua função."
+    },
+    "events": {
+        "permission": "Não tem a permissão necessária.",
+        "attempt": "Tentativa de não-permissões",
+        "descattempt": "O membro {{{usrtag}} tentou executar o comando {{{cmdname}} sem ter a permissão necessária: {{perm}}",
+        "generated": "Uma nova chave de licença foi gerada por",
+        "removed": "Uma nova chave de licença foi resgatada por",
+        "redeemed": "Uma nova chave de licença foi resgatada por",
+        "mention": "Olá, eu sou Licensy\nMeu prefixo é `/`\nEu estou a utilizar comandos de corte!",
+        "avert": "você envia mensagens muito rapidamente.",
+        "kickspam": "foi chutado por spam!"
+    },
+    "owners": {
+        "notserverowner": "Somente o proprietário do servidor pode gerenciar os proprietários.",
+        "notinownerlist": "Você não está na lista de proprietários.",
+        "alreadyadded": "já está na lista de proprietários.",
+        "added": "foi adicionado à lista de proprietários.",
+        "notowner": "não está na lista de proprietários.",
+        "removed": "foi removido da lista de proprietários.",
+        "none": "Nenhum.",
+        "owner": "Proprietários"
+    }
+}

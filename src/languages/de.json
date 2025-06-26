@@ -1,0 +1,114 @@
+{
+    "botinfos": {
+        "dev": "Entwickler",
+        "users": "Benutzer",
+        "servers": "Servers",
+        "uptime": "Betriebszeit",
+        "support": "Unterstützung",
+        "here": "Hier"
+    },
+    "panel": {
+        "editing": "Bearbeitung:",
+        "currentkey": "Aktueller Schlüssel:",
+        "currentrole": "Aktuelle Rolle:",
+        "currenttime": "Aktuelle Dauer:",
+        "editrole": "Klicken Sie auf <:role:1109298034019405926>, um die Rolle des Schlüssels zu bearbeiten",
+        "editkey": "Klicken Sie auf <:key:1109298417081012284>, um einen neuen eindeutigen Schlüssel zu generieren",
+        "edittime": "Klicken Sie auf <:time:1109299201583628380>, um die Uhrzeit des Schlüssels zu bearbeiten",
+        "deletekey": "Klicken Sie auf <:delete:1109518926708228136>, um den Schlüssel zu löschen (unwiderruflich)",
+        "sendroles": "Sende die ID der Rolle oder erwähne sie in diesem Kanal.",
+        "invalidrole": "Ungültige Rolle.",
+        "uniquecodeedited": "Einzigartiger Code des Schlüssels bearbeitet.",
+        "sendnewkeytime": "Senden Sie die neue Dauer des Schlüssels (Beispiele: 24h für 24 Stunden, 20d für 20 Tage)",
+        "keydatadeleted": "Schlüsseldaten gelöscht.\nHochladen der neuen Daten in das Panel...",
+        "keyspaneltitle": "Schlüsselpanel",
+        "keyspaneldesc": "Hier können Sie Ihre Schlüssel verwalten.\nWählen Sie den Schlüssel aus, den Sie verwalten möchten."
+    }, 
+    "deleteall": {
+        "nokey": "Es gibt keinen Schlüssel in der Datenbank.",
+        "keyreset": "Taste zurücksetzen",
+        "alldeleted": "Alle Schlüssel wurden erfolgreich gelöscht."
+    },
+    "generate": {
+        "maxkeys": "Sie haben die maximal zulässige Schlüsselzahl generiert.",
+        "invalid": "Die Zeit des Lizenzschlüssels ist ungültig.\nBeispiel: `1d für 1 Tag`, `1y für 1 Jahr`, `2h für 2 Stunden` **oder** `3m für 3 Minuten`.",
+        "btn": "Klicken Sie auf mich, wenn Sie den Schlüssel nicht kopieren können",
+        "keygen": "Schlüssel generieren",
+        "words": ["Schlüssel", "Rolle", "Zeit"],
+        "sent": "In privaten Nachrichten gesendeter Schlüssel."
+    },
+    "help": {
+        "words": ["Lizenz", "Erlaubnis", "Name", "Kategorie", "Informationen", "Beschreibung"]
+    },
+    "infos": {
+
+    },
+    "invite": {
+        "invite": "Fügen Sie unseren Bot hinzu, indem Sie auf den unten stehenden Button klicken"
+    },
+    "logs": {
+        "ch": "Der Kanal {{sl}} wurde auf die Logs gesetzt"
+    },
+    "ping": {
+
+    },
+    "redeem": {
+        "invalidkey": "Dieser Schlüssel ist ungültig.",
+        "redeem": "Taste redeem",
+        "role": "Rolle hinzugefügt",
+        "redeemed": "Schlüssel eingelöst",
+        "dms": "Vergessen Sie nicht, Ihre privaten Nachrichten zu aktivieren!",
+        "expired": "Ihr Lizenzschlüssel ist abgelaufen und die Rolle {{rr}} wurde Ihnen entzogen.",
+        "exptitle": "Schlüssel Abgelaufen"
+    },
+    "remove": {
+        "remove": "Taste Entfernen"
+    },
+    "uptime": {
+        "online": "Ich bin online seit"
+    },
+    "lang": {
+        "updated": "Die Sprache des Bots wurde auf Deutsch geändert.",
+        "already": "Der Bot ist bereits auf Deutsch."
+    },
+    "antispam": {
+        "activated": "Antispam wurde erfolgreich aktiviert.",
+        "alreadyact": "Antispam ist bereits aktiviert.",
+        "desactivated": "Antispam wurde erfolgreich deaktiviert.",
+        "alreadydesact": "Antispam ist bereits deaktiviert.",
+        "nopremium": "Dieser Server hat keine Prämie"
+    },
+    "giveaway": {
+        "gwended": "Lizenzvergabe beendet!",
+        "gwendtime": "Endzeit:",
+        "dropMessage": "Reagieren Sie als Erster mit",
+        "inviteToParticipate": "Reagieren Sie mit 🔑, um am Lizenz Werbegeschenk teilzunehmen!",
+        "winMessage": "Herzlichen Glückwunsch, {wwww}! Du hast die Rolle **{{rrrrrr}}** gewonnen!\nDie Lizenz der Rolle wurde dir in privaten Nachrichten zugeschickt.",
+        "noWinner": "Gewinnspiel abgesagt, zu wenig Teilnahmen.",
+        "hostedBy": "Veranstaltet von:",
+        "winners": "Gewinner",
+        "endedAt": "Beendet um",
+        "wsend": "Du hast das Giveaway der Gilde {{gnn}} gewonnen\nHier ist dein Lizenzschlüssel: {{kkkk}}\nVerwende {{cmddd}}, um deine Rolle zu bekommen."
+    },
+    "events": {
+        "permission": "Sie haben nicht die erforderliche Erlaubnis.",
+        "attempt": "Unerlaubter Versuch",
+        "descattempt": "Das Mitglied {{usrtag}} hat versucht, den Befehl {{cmdname}} auszuführen, ohne die erforderliche Berechtigung zu haben: {{perm}}",
+        "generated": "Ein neuer Lizenzschlüssel wurde generiert von",
+        "removed": "Ein neuer Lizenzschlüssel wurde eingelöst durch",
+        "redeemed": "Ein neuer Lizenzschlüssel wurde eingelöst von",
+        "mention": "Hallo, ich bin Licensy\nMein Präfix ist `/`\nIch benutze Slash-Befehle!",
+        "avert": "Sie senden Nachrichten zu schnell.",
+        "kickspam": "wurde wegen Spam gekickt!"
+    },
+    "owners": {
+        "notserverowner": "Nur der Serverbesitzer kann die Besitzer verwalten.",
+        "notinownerlist": "Sie sind nicht in der Eigentümerliste.",
+        "alreadyadded": "ist bereits in der Eigentümerliste.",
+        "added": "wurde zur Eigentümerliste hinzugefügt.",
+        "notowner": "ist nicht in der Eigentümerliste.",
+        "removed": "wurde aus der Eigentümerliste entfernt.",
+        "none": "Keine.",
+        "owner": "Eigentümer"
+    }
+}
