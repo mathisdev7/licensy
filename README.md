@@ -18,6 +18,9 @@ I want to be transparent with the Licensy community. Due to time constraints, I'
 **Want to use the official bot?**
 [**🤖 Invite Licensy to your server**](https://discord.com/api/oauth2/authorize?client_id=971970180353777714&permissions=8&scope=bot%20applications.commands)
 
+**Show your support!** ⭐
+If you find Licensy useful, please consider starring this repository - it really helps and motivates me to keep working on the project!
+
 Thank you for understanding and for being part of the Licensy community! 💙
 
 ## 📋 Table of Contents
