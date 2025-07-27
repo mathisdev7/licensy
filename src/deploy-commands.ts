@@ -12,13 +12,15 @@ import { loadStructures } from "./misc/util.js";
 
 import type { Command } from "./structures/command.js";
 
-const commands:
-  | RESTPostAPIApplicationCommandsJSONBody[]
-  | RESTPostAPIApplicationGuildCommandsJSONBody[] = [];
+  const commands: (
+    | RESTPostAPIApplicationCommandsJSONBody
+    | RESTPostAPIApplicationGuildCommandsJSONBody
+  )[] = [];
 
-const premiumCommands:
-  | RESTPostAPIApplicationCommandsJSONBody[]
-  | RESTPostAPIApplicationGuildCommandsJSONBody[] = [];
+  const premiumCommands: (
+    | RESTPostAPIApplicationCommandsJSONBody
+    | RESTPostAPIApplicationGuildCommandsJSONBody
+  )[] = [];
 
 const commandFolderPath = fileURLToPath(new URL("commands", import.meta.url));
 const commandFiles: Command[] = await loadStructures(commandFolderPath, [

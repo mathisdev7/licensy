@@ -132,9 +132,10 @@ export function formatMessageToEmbed(message: Message<true>) {
 }
 
 export async function deployCommands(guildId?: string) {
-  const commands:
-    | RESTPostAPIApplicationCommandsJSONBody[]
-    | RESTPostAPIApplicationGuildCommandsJSONBody[] = [];
+  const commands: (
+    | RESTPostAPIApplicationCommandsJSONBody
+    | RESTPostAPIApplicationGuildCommandsJSONBody
+  )[] = [];
 
   const commandFolderPath = fileURLToPath(
     new URL("../commands", import.meta.url)

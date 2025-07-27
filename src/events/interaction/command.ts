@@ -1,4 +1,4 @@
-import { Collection, Events, bold, inlineCode } from "discord.js";
+import { ChannelType, Collection, Events, bold, inlineCode } from "discord.js";
 
 import { missingPerms } from "../../misc/util.js";
 
@@ -53,7 +53,7 @@ export default {
           return;
         }
         if (logs.activated === false) return;
-        if (logChannel.isTextBased()) {
+        if (logChannel.type === ChannelType.GuildText) {
           await logChannel.send({
             content: `⚠️ ${
               interaction.user.tag
