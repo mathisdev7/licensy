@@ -65,7 +65,7 @@ export default {
         interaction.guild,
         member,
         interaction.member,
-        interaction.locale
+        interaction.guildLocale
       );
       interaction.reply({
         content:

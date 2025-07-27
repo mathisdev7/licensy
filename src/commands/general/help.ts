@@ -27,12 +27,6 @@ export default {
         (command: any) =>
           `**${command.data.name}**: ${command.data.description}`
       );
-      const setLocaleCommand: any = commands.find(
-        (command) => command.data.name === "set-locale"
-      );
-      licenseCommandsList.push(
-        `**${setLocaleCommand.data.name}**: ${setLocaleCommand.data.description}`
-      );
       const embed = new EmbedBuilder()
         .setTitle("License Commands")
         .setDescription(licenseCommandsList.join("\n"))

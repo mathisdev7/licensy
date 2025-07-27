@@ -37,17 +37,6 @@ export default {
           activated: false,
         },
       });
-      let locale = await prisma.locale.findFirst({
-        where: { guildId: interaction.guild.id },
-      });
-      if (!locale) {
-        locale = await prisma.locale.create({
-          data: {
-            guildId: interaction.guild.id,
-            locale: "en-GB",
-          },
-        });
-      }
       if (!license) {
         prisma.$disconnect();
         interaction.reply({
@@ -85,37 +74,37 @@ export default {
           license.createdAt.getTime()
       )
         .getDate()
-        .toLocaleString(interaction.locale)}/${new Date(
+        .toLocaleString(interaction.guildLocale)}/${new Date(
         Number(license.validUntil) +
           license.updatedAt.getTime() -
           license.createdAt.getTime()
       )
         .getMonth()
-        .toLocaleString(interaction.locale)}/${new Date(
+        .toLocaleString(interaction.guildLocale)}/${new Date(
         Number(license.validUntil) +
           license.updatedAt.getTime() -
           license.createdAt.getTime()
       )
         .getFullYear()
-        .toLocaleString(interaction.locale)} ${new Date(
+        .toLocaleString(interaction.guildLocale)} ${new Date(
         Number(license.validUntil) +
           license.updatedAt.getTime() -
           license.createdAt.getTime()
       )
         .getHours()
-        .toLocaleString(interaction.locale)}:${new Date(
+        .toLocaleString(interaction.guildLocale)}:${new Date(
         Number(license.validUntil) +
           license.updatedAt.getTime() -
           license.createdAt.getTime()
       )
         .getMinutes()
-        .toLocaleString(interaction.locale)}:${new Date(
+        .toLocaleString(interaction.guildLocale)}:${new Date(
         Number(license.validUntil) +
           license.updatedAt.getTime() -
           license.createdAt.getTime()
       )
         .getSeconds()
-        .toLocaleString(interaction.locale)}`;
+        .toLocaleString(interaction.guildLocale)}`;
 
       const embed = new EmbedBuilder()
         .setTitle(`License redeemed - ${license.key}`)

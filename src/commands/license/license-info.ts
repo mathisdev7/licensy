@@ -38,17 +38,6 @@ export default {
           guildId: interaction.guild.id,
         },
       });
-      let locale = await prisma.locale.findFirst({
-        where: { guildId: interaction.guild.id },
-      });
-      if (!locale) {
-        locale = await prisma.locale.create({
-          data: {
-            guildId: interaction.guild.id,
-            locale: "en-GB",
-          },
-        });
-      }
       if (!license) {
         prisma.$disconnect();
         interaction.reply({
@@ -86,33 +75,33 @@ export default {
             name: "License created at",
             value: `${license.createdAt
               .getDate()
-              .toLocaleString(interaction.locale)}/${license.createdAt
+              .toLocaleString(interaction.guildLocale)}/${license.createdAt
               .getMonth()
-              .toLocaleString(interaction.locale)}/${license.createdAt
+              .toLocaleString(interaction.guildLocale)}/${license.createdAt
               .getFullYear()
-              .toLocaleString(interaction.locale)} ${license.createdAt
+              .toLocaleString(interaction.guildLocale)} ${license.createdAt
               .getHours()
-              .toLocaleString(interaction.locale)}:${license.createdAt
+              .toLocaleString(interaction.guildLocale)}:${license.createdAt
               .getMinutes()
-              .toLocaleString(interaction.locale)}:${license.createdAt
+              .toLocaleString(interaction.guildLocale)}:${license.createdAt
               .getSeconds()
-              .toLocaleString(interaction.locale)}`,
+              .toLocaleString(interaction.guildLocale)}`,
           },
           {
             name: "License last updated at",
             value: `${license.updatedAt
               .getDate()
-              .toLocaleString(interaction.locale)}/${license.updatedAt
+              .toLocaleString(interaction.guildLocale)}/${license.updatedAt
               .getMonth()
-              .toLocaleString(interaction.locale)}/${license.updatedAt
+              .toLocaleString(interaction.guildLocale)}/${license.updatedAt
               .getFullYear()
-              .toLocaleString(interaction.locale)} ${license.updatedAt
+              .toLocaleString(interaction.guildLocale)} ${license.updatedAt
               .getHours()
-              .toLocaleString(interaction.locale)}:${license.updatedAt
+              .toLocaleString(interaction.guildLocale)}:${license.updatedAt
               .getMinutes()
-              .toLocaleString(interaction.locale)}:${license.updatedAt
+              .toLocaleString(interaction.guildLocale)}:${license.updatedAt
               .getSeconds()
-              .toLocaleString(interaction.locale)}`,
+              .toLocaleString(interaction.guildLocale)}`,
           },
           {
             name: "License time",
@@ -140,37 +129,37 @@ export default {
                 license.createdAt.getTime()
             )
               .getDate()
-              .toLocaleString(interaction.locale)}/${new Date(
+              .toLocaleString(interaction.guildLocale)}/${new Date(
               Number(license.validUntil) +
                 license.updatedAt.getTime() -
                 license.createdAt.getTime()
             )
               .getMonth()
-              .toLocaleString(interaction.locale)}/${new Date(
+              .toLocaleString(interaction.guildLocale)}/${new Date(
               Number(license.validUntil) +
                 license.updatedAt.getTime() -
                 license.createdAt.getTime()
             )
               .getFullYear()
-              .toLocaleString(interaction.locale)} ${new Date(
+              .toLocaleString(interaction.guildLocale)} ${new Date(
               Number(license.validUntil) +
                 license.updatedAt.getTime() -
                 license.createdAt.getTime()
             )
               .getHours()
-              .toLocaleString(interaction.locale)}:${new Date(
+              .toLocaleString(interaction.guildLocale)}:${new Date(
               Number(license.validUntil) +
                 license.updatedAt.getTime() -
                 license.createdAt.getTime()
             )
               .getMinutes()
-              .toLocaleString(interaction.locale)}:${new Date(
+              .toLocaleString(interaction.guildLocale)}:${new Date(
               Number(license.validUntil) +
                 license.updatedAt.getTime() -
                 license.createdAt.getTime()
             )
               .getSeconds()
-              .toLocaleString(interaction.locale)}`,
+              .toLocaleString(interaction.guildLocale)}`,
           },
         ]);
       interaction.reply({

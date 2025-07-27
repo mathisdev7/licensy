@@ -92,19 +92,13 @@ Thank you for understanding and for being part of the Licensy community! 💙
    pnpm dlx prisma generate
    ```
 
-5. **Build the project**
-
-   ```bash
-   pnpm run build
-   ```
-
-6. **Deploy slash commands**
+5. **Deploy slash commands**
 
    ```bash
    pnpm run deploy
    ```
 
-7. **Start the bot**
+6. **Start the bot**
    ```bash
    pnpm start
    ```
@@ -181,7 +175,6 @@ The bot uses PostgreSQL with the following main tables:
 - **License**: Stores license keys, roles, expiration dates, and redemption status
 - **Premium**: Manages premium memberships for users and guilds
 - **Logs**: Tracks license-related activities
-- **Locale**: Stores language preferences per guild
 
 ## 🛠️ Development
 

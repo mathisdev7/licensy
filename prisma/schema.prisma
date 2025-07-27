@@ -43,11 +43,3 @@ model Premium {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
-
-model Locale {
-  id          String    @id @default(cuid())
-  guildId     String
-  locale      String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-}

@@ -24,17 +24,6 @@ export default {
       return;
     }
     if (logs.activated === false) return prisma.$disconnect();
-    let locale = await prisma.locale.findFirst({
-      where: { guildId: guild.id },
-    });
-    if (!locale) {
-      locale = await prisma.locale.create({
-        data: {
-          guildId: guild.id,
-          locale: "en-GB",
-        },
-      });
-    }
     if (logChannel.isTextBased()) {
       const embed = new EmbedBuilder()
         .setTitle("LOGS - License Redeemed")
