@@ -276,7 +276,6 @@ export function manageExpiringOnReady(prisma: PrismaClient, client: any) {
       for (const license of licenses) {
         try {
           if (license.activated === false && !license.redeemer) continue;
-          logError(`Vérification de la clé de licence: ${license.key}`, null, 'info');
           if (isExpired(Number(license.validUntil))) {
             const guild = await safeFetchGuild(client, license.guildId);
             if (!guild) {
