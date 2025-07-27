@@ -17,6 +17,7 @@ import { join } from "node:path";
 import { URL, fileURLToPath, pathToFileURL } from "node:url";
 
 import type { Command } from "../structures/command.js";
+import { ErrorConfig, logError } from "../config/errorHandling.js";
 
 export async function dynamicImport(path: string): Promise<any> {
   const module = await import(pathToFileURL(path).toString());
@@ -204,10 +205,67 @@ export function generateRandomKey(length: number): string {
   return key;
 }
 
+export async function safeFetchMember(guild: any, userId: string) {
+  try {
+    return await guild.members.fetch(userId);
+  } catch (error) {
+    if (error.code === ErrorConfig.discordErrorCodes.UNKNOWN_MEMBER) {
+      logError(`Member ${userId} not found in guild ${guild.id}`, error, 'warn');
+    } else if (error.code === ErrorConfig.discordErrorCodes.UNKNOWN_GUILD) {
+      logError(`Guild ${guild.id} not found`, error, 'warn');
+    } else {
+      logError(`Error fetching member ${userId}`, error, 'warn');
+    }
+    return null;
+  }
+}
+
+export async function safeFetchGuild(client: any, guildId: string) {
+  try {
+    return await client.guilds.fetch(guildId);
+  } catch (error) {
+    if (error.code === ErrorConfig.discordErrorCodes.UNKNOWN_GUILD) {
+      logError(`Guild ${guildId} not found`, error, 'warn');
+    } else {
+      logError(`Error fetching guild ${guildId}`, error, 'warn');
+    }
+    return null;
+  }
+}
+
+export async function safeSendDM(user: any, content: string | object) {
+  try {
+    await user.send(content);
+    return true;
+  } catch (error) {
+    if (error.code === ErrorConfig.discordErrorCodes.CANNOT_SEND_DM) {
+      logError(`Cannot send DM to user ${user.tag}: DMs disabled`, error, 'warn');
+    } else {
+      logError(`Error sending DM to user ${user.tag}`, error, 'warn');
+    }
+    return false;
+  }
+}
+
+export async function safeRemoveRole(member: any, roleId: string) {
+  try {
+    await member.roles.remove(roleId);
+    return true;
+  } catch (error) {
+    if (error.code === ErrorConfig.discordErrorCodes.MISSING_PERMISSIONS) {
+      logError(`Missing permissions to remove role ${roleId} from ${member.user.tag}`, error, 'warn');
+    } else if (error.code === ErrorConfig.discordErrorCodes.UNKNOWN_ROLE) {
+      logError(`Role ${roleId} not found`, error, 'warn');
+    } else {
+      logError(`Error removing role ${roleId} from ${member.user.tag}`, error, 'warn');
+    }
+    return false;
+  }
+}
+
 export function isExpired(validUntil: number): boolean {
   const currentTime = Date.now();
   const timeDifference = validUntil - currentTime;
-  console.log(timeDifference);
   return timeDifference <= 0;
 }
 
@@ -216,33 +274,49 @@ export function manageExpiringOnReady(prisma: PrismaClient, client: any) {
     setInterval(async () => {
       const licenses = await prisma.license.findMany();
       for (const license of licenses) {
-        if (license.activated === false && !license.redeemer) continue;
-        console.log(`Vérification de la clé de licence: ${license.key}`);
-        if (isExpired(Number(license.validUntil))) {
-          const guild = await client.guilds.fetch(license.guildId);
-          const member = await guild.members.fetch(license.redeemer);
-          client.emit("licenseExpired", client, license, guild, member);
-          member.user.send({
-            content: `Your license key \`${
-              license.key
-            }\` has expired.\nAnd the role \`${
-              guild.roles.cache.get(license.role).name || "Role not found."
-            }\` has been removed from you.`,
-          });
-          await member.fetch(true);
-          await member.roles.remove(license.role);
-          await prisma.license.delete({
-            where: {
-              key: license.key,
-            },
-          });
+        try {
+          if (license.activated === false && !license.redeemer) continue;
+          logError(`Vérification de la clé de licence: ${license.key}`, null, 'info');
+          if (isExpired(Number(license.validUntil))) {
+            const guild = await safeFetchGuild(client, license.guildId);
+            if (!guild) {
+              logError(`Guild ${license.guildId} not found, deleting license ${license.key}`, null, 'warn');
+              await prisma.license.delete({ where: { key: license.key } });
+              continue;
+            }
+
+            const member = await safeFetchMember(guild, license.redeemer);
+            if (!member) {
+              logError(`Member ${license.redeemer} not found in guild ${license.guildId}, deleting license ${license.key}`, null, 'warn');
+              await prisma.license.delete({ where: { key: license.key } });
+              continue;
+            }
+
+            client.emit("licenseExpired", client, license, guild, member);
+
+            await safeSendDM(member.user, {
+              content: `Your license key \`${
+                license.key
+              }\` has expired.\nAnd the role \`${
+                guild.roles.cache.get(license.role)?.name || "Role not found."
+              }\` has been removed from you.`,
+            });
+
+            await safeRemoveRole(member, license.role);
+
+            await prisma.license.delete({
+              where: {
+                key: license.key,
+              },
+            });
+          }
+        } catch (licenseError) {
+          logError(`Error processing license ${license.key}`, licenseError, 'error');
         }
       }
     }, 10000);
   } catch (error) {
-    console.error(
-      `Erreur lors de la gestion des expirations de licence: ${error}`
-    );
+    logError(`Erreur lors de la gestion des expirations de licence`, error, 'error');
   }
 }
 
@@ -251,18 +325,34 @@ export function managePremiumOnReady(prisma: PrismaClient, client: any) {
     setInterval(async () => {
       const premiums = await prisma.premium.findMany();
       for (const premium of premiums) {
-        if (isExpired(Number(premium.validUntil))) {
-          const guild = await client.guilds.fetch(premium.guildId);
-          const member = await guild.members.fetch(premium.userId);
-          member.user.send({
-            content: `Your premium on Licensy has expired.\nYou no longer have premium in the guild \`${guild.name}\`.`,
-          });
-          await member.fetch(true);
-          await prisma.premium.delete({
-            where: {
-              id: premium.id,
-            },
-          });
+        try {
+          if (isExpired(Number(premium.validUntil))) {
+            const guild = await safeFetchGuild(client, premium.guildId);
+            if (!guild) {
+              console.warn(`Guild ${premium.guildId} not found, deleting premium ${premium.id}`);
+              await prisma.premium.delete({ where: { id: premium.id } });
+              continue;
+            }
+
+            const member = await safeFetchMember(guild, premium.userId);
+            if (!member) {
+              console.warn(`Member ${premium.userId} not found in guild ${premium.guildId}, deleting premium ${premium.id}`);
+              await prisma.premium.delete({ where: { id: premium.id } });
+              continue;
+            }
+
+            await safeSendDM(member.user, {
+              content: `Your premium on Licensy has expired.\nYou no longer have premium in the guild \`${guild.name}\`.`,
+            });
+
+            await prisma.premium.delete({
+              where: {
+                id: premium.id,
+              },
+            });
+          }
+        } catch (premiumError) {
+          console.error(`Error processing premium ${premium.id}: ${premiumError}`);
         }
       }
     }, 10000);

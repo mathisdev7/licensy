@@ -50,7 +50,26 @@ export class ExtendedClient extends Client {
     }
   }
 
+  private setupErrorHandlers() {
+    process.on('unhandledRejection', (reason, promise) => {
+      console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    });
+
+    process.on('uncaughtException', (error) => {
+      console.error('Uncaught Exception:', error);
+    });
+
+    this.on('error', (error) => {
+      console.error('Discord client error:', error);
+    });
+
+    this.on('warn', (warning) => {
+      console.warn('Discord client warning:', warning);
+    });
+  }
+
   start() {
+    this.setupErrorHandlers();
     this.loadModules();
     this.login();
   }

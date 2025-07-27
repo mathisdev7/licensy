@@ -42,16 +42,26 @@ export default {
         });
         return;
       }
-      const member = await interaction.guild.members.fetch(license.redeemer);
+
+      const { safeFetchMember, safeRemoveRole } = await import("../../misc/util.js");
+      const member = await safeFetchMember(interaction.guild, license.redeemer);
       if (!member) {
+        await prisma.license.delete({
+          where: {
+            key: license.key,
+            guildId: interaction.guild.id,
+          },
+        });
         prisma.$disconnect();
         interaction.reply({
-          content: "The member who redeemed the license is not in the guild.",
+          content: "The member who redeemed the license is no longer in the guild. License has been deleted.",
           ephemeral: true,
         });
         return;
       }
-      await member.roles.remove(license.role);
+
+      await safeRemoveRole(member, license.role);
+
       await prisma.license.delete({
         where: {
           key: license.key,

@@ -125,7 +125,35 @@ Make sure your bot has the following permissions:
 - Read Message History
 - Embed Links
 
-## 📖 Usage
+## Error Handling & Anti-Crash System
+
+Licensy v3 includes a robust error handling system to prevent crashes from common Discord API errors:
+
+### Common Errors Handled
+
+- **Unknown Member (10007)**: When a user leaves the server but still has active licenses
+- **Unknown Guild (10004)**: When the bot is removed from a server
+- **Missing Permissions (50013)**: When the bot lacks permissions to perform actions
+- **Cannot Send DM (50007)**: When users have disabled DMs
+- **Unknown Role (10011)**: When roles are deleted
+
+### Safety Features
+
+- **Safe API Calls**: All Discord API calls are wrapped in error handlers
+- **Graceful Degradation**: Bot continues operating even when some operations fail
+- **Automatic Cleanup**: Invalid licenses and premiums are automatically removed
+- **Detailed Logging**: All errors are logged for debugging purposes
+- **Process Error Handlers**: Global handlers for unhandled promises and exceptions
+
+### Utility Functions
+
+The bot includes several utility functions for safe operations:
+- `safeFetchMember()` - Safely fetch guild members
+- `safeFetchGuild()` - Safely fetch guilds
+- `safeSendDM()` - Safely send direct messages
+- `safeRemoveRole()` - Safely remove roles from members
+
+## Usage
 
 ### Basic Workflow
 
