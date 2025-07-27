@@ -62,6 +62,7 @@ export default {
           });
           await prisma.license.deleteMany({
             where: {
+              activated: false,
               guildId: interaction.guild.id,
             },
           });
