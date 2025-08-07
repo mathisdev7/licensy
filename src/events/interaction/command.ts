@@ -2,7 +2,6 @@ import { ChannelType, Collection, Events, bold, inlineCode } from "discord.js";
 
 import { missingPerms } from "../../misc/util.js";
 
-import { PrismaClient } from "@prisma/client";
 import type { Event } from "../../structures/event.js";
 
 export default {
@@ -27,31 +26,22 @@ export default {
     }
 
     if (command.opt?.userPermissions) {
+      const channelPermissions = interaction.member.permissionsIn(
+        interaction.channel
+      );
       const missingUserPerms = missingPerms(
-        interaction.member.permissionsIn(interaction.channel),
-        command.opt?.userPermissions
-      )
-        ? missingPerms(
-            interaction.member.permissionsIn(interaction.channel),
-            command.opt?.userPermissions
-          )
-        : missingPerms(
-            interaction.memberPermissions,
-            command.opt?.userPermissions
-          );
+        channelPermissions,
+        command.opt.userPermissions
+      );
 
-      if (missingUserPerms?.length) {
-        const prisma = new PrismaClient();
+      if (missingUserPerms.length) {
+        const prisma = interaction.client.prisma;
         const logs = await prisma.logs.findFirst({
           where: { guildId: interaction.guild.id },
         });
-        if (!logs) {
-          return;
-        }
+        if (!logs) return;
         const logChannel = interaction.client.channels.cache.get(logs.channel);
-        if (!logChannel) {
-          return;
-        }
+        if (!logChannel) return;
         if (logs.activated === false) return;
         if (logChannel.type === ChannelType.GuildText) {
           await logChannel.send({
@@ -75,20 +65,15 @@ export default {
     }
 
     if (command.opt?.botPermissions) {
+      const botChannelPermissions = interaction.guild.members.me.permissionsIn(
+        interaction.channel
+      );
       const missingBotPerms = missingPerms(
-        interaction.guild.members.me.permissionsIn(interaction.channel),
-        command.opt?.botPermissions
-      )
-        ? missingPerms(
-            interaction.guild.members.me.permissionsIn(interaction.channel),
-            command.opt?.botPermissions
-          )
-        : missingPerms(
-            interaction.guild.members.me.permissions,
-            command.opt?.botPermissions
-          );
+        botChannelPermissions,
+        command.opt.botPermissions
+      );
 
-      if (missingBotPerms?.length) {
+      if (missingBotPerms.length) {
         await interaction.reply({
           content: `⚠️ I need the following permission${
             missingBotPerms.length > 1 ? "s" : ""

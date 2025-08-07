@@ -6,7 +6,7 @@ global.colors = colors;
 
 export default {
   name: Events.GuildCreate,
-  once: true,
+  once: false,
   async execute(guild) {
     try {
       console.log("Guild created:".green, guild.name);

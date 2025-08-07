@@ -68,9 +68,9 @@ export class ExtendedClient extends Client {
     });
   }
 
-  start() {
+  async start() {
     this.setupErrorHandlers();
-    this.loadModules();
-    this.login();
+    await this.loadModules();
+    await this.login(process.env.DISCORD_TOKEN);
   }
 }

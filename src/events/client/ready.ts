@@ -2,11 +2,10 @@ import colors from "colors";
 import { ActivityType, Events } from "discord.js";
 global.colors = colors;
 
-import { PrismaClient } from "@prisma/client";
 import {
-  deployCommands,
-  manageExpiringOnReady,
-  managePremiumOnReady,
+	deployCommands,
+	manageExpiringOnReady,
+	managePremiumOnReady,
 } from "../../misc/util.js";
 import type { Event } from "../../structures/event.js";
 
@@ -24,9 +23,8 @@ export default {
           type: ActivityType.Watching,
         });
       }, 15000);
-      const prisma = new PrismaClient();
-      manageExpiringOnReady(prisma, client);
-      managePremiumOnReady(prisma, client);
+      manageExpiringOnReady(client);
+      managePremiumOnReady(client);
     } catch (error) {
       console.error(error);
     }

@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import { EmbedBuilder, Guild, GuildMember } from "discord.js";
 import { licenseData } from "../../types/licenseData.js";
 
 export default {
-  name: "licenseExpired" as any,
+  name: "licenseExpired",
   once: false,
   async execute(
     client: any,
@@ -11,7 +10,7 @@ export default {
     guild: Guild,
     member: GuildMember
   ) {
-    const prisma = new PrismaClient();
+    const prisma = client.prisma;
     const logs = await prisma.logs.findFirst({ where: { guildId: guild.id } });
     if (!logs) {
       prisma.$disconnect();

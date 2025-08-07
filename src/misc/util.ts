@@ -1,23 +1,22 @@
-import { PrismaClient } from "@prisma/client";
 import {
-  PermissionsBitField,
-  REST,
-  Routes,
-  type APIEmbed,
-  type Message,
-  type PermissionResolvable,
-  type PermissionsString,
-  type RESTPostAPIApplicationCommandsJSONBody,
-  type RESTPostAPIApplicationGuildCommandsJSONBody,
-  type RESTPutAPIApplicationCommandsJSONBody,
-  type RESTPutAPIApplicationGuildCommandsJSONBody,
+	PermissionsBitField,
+	REST,
+	Routes,
+	type APIEmbed,
+	type Message,
+	type PermissionResolvable,
+	type PermissionsString,
+	type RESTPostAPIApplicationCommandsJSONBody,
+	type RESTPostAPIApplicationGuildCommandsJSONBody,
+	type RESTPutAPIApplicationCommandsJSONBody,
+	type RESTPutAPIApplicationGuildCommandsJSONBody,
 } from "discord.js";
 import { readdirSync, type PathLike } from "node:fs";
 import { join } from "node:path";
 import { URL, fileURLToPath, pathToFileURL } from "node:url";
 
-import type { Command } from "../structures/command.js";
 import { ErrorConfig, logError } from "../config/errorHandling.js";
+import type { Command } from "../structures/command.js";
 
 export async function dynamicImport(path: string): Promise<any> {
   const module = await import(pathToFileURL(path).toString());
@@ -161,28 +160,19 @@ export async function deployCommands(guildId?: string) {
         | RESTPutAPIApplicationCommandsJSONBody[]
         | RESTPutAPIApplicationGuildCommandsJSONBody[] = [];
 
-      await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-        body: [],
-      });
       if (guildId) {
-        await rest.put(
+        data = (await rest.put(
           Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId),
-          {
-            body: commands,
-          }
+          { body: commands }
+        )) as RESTPutAPIApplicationGuildCommandsJSONBody[];
+        console.log(
+          `Successfully reloaded ${data.length} application (/) commands in guild ${guildId}.`
         );
-        return console.log(
-          `Successfully reloaded ${data.length} application (/) commands ${
-            guildId ? `in guild ${guildId}` : ""
-          }.`
-        );
+        return;
       }
-      data = (await rest.put(
-        Routes.applicationCommands(process.env.CLIENT_ID),
-        {
-          body: commands,
-        }
-      )) as RESTPutAPIApplicationCommandsJSONBody[];
+      data = (await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
+        body: commands,
+      })) as RESTPutAPIApplicationCommandsJSONBody[];
 
       console.log(
         `Successfully reloaded ${data.length} application (/) commands ${
@@ -269,9 +259,10 @@ export function isExpired(validUntil: number): boolean {
   return timeDifference <= 0;
 }
 
-export function manageExpiringOnReady(prisma: PrismaClient, client: any) {
+export function manageExpiringOnReady(client: any) {
   try {
     setInterval(async () => {
+      const prisma = client.prisma;
       const licenses = await prisma.license.findMany();
       for (const license of licenses) {
         try {
@@ -319,9 +310,10 @@ export function manageExpiringOnReady(prisma: PrismaClient, client: any) {
   }
 }
 
-export function managePremiumOnReady(prisma: PrismaClient, client: any) {
+export function managePremiumOnReady(client: any) {
   try {
     setInterval(async () => {
+      const prisma = client.prisma;
       const premiums = await prisma.premium.findMany();
       for (const premium of premiums) {
         try {
