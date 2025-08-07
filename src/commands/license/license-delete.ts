@@ -1,6 +1,7 @@
 import {
   ApplicationCommandOptionType,
   ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 import type { Command } from "../../structures/command.js";
 
@@ -37,7 +38,7 @@ export default {
         prisma.$disconnect();
         interaction.reply({
           content: "The license key provided does not exist.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -49,7 +50,7 @@ export default {
       });
       interaction.reply({
         content: "The license key has been deleted.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       prisma.$disconnect();
     } catch (error) {

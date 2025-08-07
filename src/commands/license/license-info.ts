@@ -5,6 +5,7 @@ import {
   EmbedBuilder,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 import parseMs from "parse-ms-2";
 
@@ -43,7 +44,7 @@ export default {
         interaction.reply({
           content:
             "The license key provided does not exist or has already been redeemed.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -59,7 +60,7 @@ export default {
         .setLabel("Copy License Key")
         .setStyle(ButtonStyle.Primary);
 
-      const row = new ActionRowBuilder<any>().addComponents(button);
+      const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
       const embed = new EmbedBuilder()
         .setTitle(`License Information - ${license.key}`)
         .addFields([
@@ -165,7 +166,7 @@ export default {
       interaction.reply({
         embeds: [embed],
         components: [row],
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       prisma.$disconnect();
     } catch (error) {

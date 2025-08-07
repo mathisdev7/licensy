@@ -72,5 +72,16 @@ export class ExtendedClient extends Client {
     this.setupErrorHandlers();
     await this.loadModules();
     await this.login(process.env.DISCORD_TOKEN);
+    const shutdown = async () => {
+      try {
+        await this.prisma.$disconnect();
+      } catch {}
+      process.exit(0);
+    };
+    process.on("beforeExit", async () => {
+      await this.prisma.$disconnect();
+    });
+    process.on("SIGINT", shutdown);
+    process.on("SIGTERM", shutdown);
   }
 }

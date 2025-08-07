@@ -2,6 +2,7 @@ import {
   ApplicationCommandOptionType,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 import ms from "ms";
 
@@ -49,7 +50,7 @@ export default {
       if (!ALLOWED_USERS.includes(interaction.user.id)) {
         interaction.reply({
           content: "You are not allowed to use this command.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -66,7 +67,7 @@ export default {
         prisma.$disconnect();
         interaction.reply({
           content: "The user does not have premium in the guild.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -81,7 +82,7 @@ export default {
       const guild = await interaction.client.guilds.fetch(guildId);
       interaction.reply({
         content: `Successfully edited premium for <@${premium.userId}> in ${guild.name}.`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       prisma.$disconnect();
     } catch (error) {

@@ -4,6 +4,7 @@ import {
   ButtonStyle,
   ChatInputCommandInteraction,
   ComponentType,
+  MessageFlags,
 } from "discord.js";
 import type { Command } from "../../structures/command.js";
 
@@ -31,7 +32,7 @@ export default {
         prisma.$disconnect();
         interaction.reply({
           content: "There is no licenses keys in the database.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -44,10 +45,13 @@ export default {
         .setLabel("No")
         .setStyle(ButtonStyle.Danger);
       interaction.reply({
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
         content: "Are you sure you want to delete all the license keys?",
         components: [
-          new ActionRowBuilder<any>().addComponents(yesButton, noButton),
+          new ActionRowBuilder<ButtonBuilder>().addComponents(
+            yesButton,
+            noButton
+          ),
         ],
       });
       const collector = interaction.channel.createMessageComponentCollector({

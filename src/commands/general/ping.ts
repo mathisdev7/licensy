@@ -4,6 +4,7 @@ import {
   inlineCode,
   time,
   type ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 
 import type { Command } from "../../structures/command.js";
@@ -31,7 +32,7 @@ export default {
           botReadyTimestamp,
           TimestampStyles.RelativeTime
         )} to see statistical information.`,
-        ephemeral: true,
+		flags: MessageFlags.Ephemeral
       });
       return;
     }

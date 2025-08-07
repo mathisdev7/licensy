@@ -3,12 +3,14 @@ import {
   EmbedBuilder,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 import ms from "ms";
 import parseMs from "parse-ms-2";
 import { generateRandomKey } from "../../misc/util.js";
 import { Command } from "../../structures/command.js";
 import { licenseData } from "../../types/licenseData.js";
+import type { ExtendedClient } from "../../structures/client.js";
 const MAX_LICENSES = 50;
 const MAX_LICENSES_PER_COMMAND = 10;
 const MAX_LICENSES_PREMIUM = 200;
@@ -47,7 +49,7 @@ export default {
   },
   async execute(interaction: ChatInputCommandInteraction<"cached">) {
     try {
-      const time = interaction.options.getString("time");
+      const time = interaction.options.getString("time", true);
       const amount = interaction.options.getInteger("amount") ?? 1;
       const role = interaction.options.getRole("role");
       const clientToMember = interaction.guild.members.cache.get(
@@ -56,7 +58,7 @@ export default {
       if (clientToMember.roles.highest.comparePositionTo(role) <= 0) {
         interaction.reply({
           content: "The bot's role is lower than the role you want to give.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -87,7 +89,7 @@ export default {
               ? MAX_LICENSES_PREMIUM - licenses.length
               : MAX_LICENSES - licenses.length
           } licenses for now.`,
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -129,11 +131,11 @@ export default {
         .setFooter({ text: "Licensy v3" });
       interaction.reply({
         embeds: [embed],
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       interaction.client.emit(
         "licenseCreate",
-        interaction.client,
+        interaction.client as ExtendedClient,
         licenseData,
         interaction.guild,
         time

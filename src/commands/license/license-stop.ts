@@ -1,8 +1,10 @@
 import {
   ApplicationCommandOptionType,
   ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 import type { Command } from "../../structures/command.js";
+import type { ExtendedClient } from "../../structures/client.js";
 
 export default {
   data: {
@@ -38,7 +40,7 @@ export default {
         interaction.reply({
           content:
             "The license key provided does not exist or is not redeemed.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -55,7 +57,7 @@ export default {
         prisma.$disconnect();
         interaction.reply({
           content: "The member who redeemed the license is no longer in the guild. License has been deleted.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -70,7 +72,7 @@ export default {
       });
       interaction.client.emit(
         "licenseStopped",
-        interaction.client,
+        interaction.client as ExtendedClient,
         license,
         interaction.guild,
         member,
@@ -80,7 +82,7 @@ export default {
       interaction.reply({
         content:
           "The license key has been deleted and the role of the member has been removed.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       prisma.$disconnect();
     } catch (error) {

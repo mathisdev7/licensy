@@ -21,11 +21,15 @@ export default {
     try {
       const commands = interaction.client.commands;
       const licenseCommands = commands.filter(
-        (command) => command.opt.category === "License"
+        (command) => (command.opt?.category ?? "General") === "License"
       );
       const licenseCommandsList = licenseCommands.map(
-        (command: any) =>
-          `**${command.data.name}**: ${command.data.description}`
+        (command: Command) =>
+          `**${command.data.name}**: ${
+            "description" in command.data
+              ? command.data.description
+              : "No description"
+          }`
       );
       const embed = new EmbedBuilder()
         .setTitle("License Commands")

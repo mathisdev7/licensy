@@ -1,4 +1,4 @@
-import { ChannelType, Collection, Events, bold, inlineCode } from "discord.js";
+import { Collection, Events, MessageFlags, TextChannel, bold, inlineCode } from "discord.js";
 
 import { missingPerms } from "../../misc/util.js";
 
@@ -7,7 +7,7 @@ import type { Event } from "../../structures/event.js";
 export default {
   name: Events.InteractionCreate,
   async execute(interaction) {
-    if (!interaction.isCommand()) return;
+    if (!interaction.isChatInputCommand()) return;
     if (!interaction.inCachedGuild()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
@@ -20,7 +20,7 @@ export default {
         content: `⚠️ There is no command matching ${inlineCode(
           interaction.commandName
         )}!`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -43,7 +43,8 @@ export default {
         const logChannel = interaction.client.channels.cache.get(logs.channel);
         if (!logChannel) return;
         if (logs.activated === false) return;
-        if (logChannel.type === ChannelType.GuildText) {
+
+        if (logChannel instanceof TextChannel) {
           await logChannel.send({
             content: `⚠️ ${
               interaction.user.tag
@@ -58,7 +59,7 @@ export default {
           content: `⚠️ You need the following permission${
             missingUserPerms.length > 1 ? "s" : ""
           }: ${missingUserPerms.map((x) => inlineCode(x)).join(", ")}`,
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -78,7 +79,7 @@ export default {
           content: `⚠️ I need the following permission${
             missingBotPerms.length > 1 ? "s" : ""
           }: ${missingBotPerms.map((x) => inlineCode(x)).join(", ")}`,
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -113,7 +114,7 @@ export default {
             content: `⚠️ Please wait ${bold(
               `${timeLeft.toFixed()} second(s)`
             )} before reusing this command!`,
-            ephemeral: true,
+            flags: MessageFlags.Ephemeral,
           });
           return;
         }
@@ -126,15 +127,16 @@ export default {
         await command.execute(interaction);
       } catch (error) {
         console.error(error);
+        const message = error instanceof Error ? error.message : String(error);
         if (interaction.replied || interaction.deferred) {
           await interaction.followUp({
-            content: `⚠️ There was an error while executing this command: \n${error.message} \nCheck the console for more info.`,
-            ephemeral: true,
+            content: `⚠️ There was an error while executing this command:\n${message}\nCheck the console for more info.`,
+            flags: MessageFlags.Ephemeral,
           });
         } else {
           await interaction.reply({
-            content: `⚠️ There was an error while executing this command: \n${error.message} \nCheck the console for more info.`,
-            ephemeral: true,
+            content: `⚠️ There was an error while executing this command:\n${message}\nCheck the console for more info.`,
+            flags: MessageFlags.Ephemeral,
           });
         }
       }
@@ -143,15 +145,16 @@ export default {
         await command.execute(interaction);
       } catch (error) {
         console.error(error);
+        const message = error instanceof Error ? error.message : String(error);
         if (interaction.replied || interaction.deferred) {
           await interaction.followUp({
-            content: `⚠️ There was an error while executing this command: \n${error.message} \nCheck the console for more info.`,
-            ephemeral: true,
+            content: `⚠️ There was an error while executing this command:\n${message}\nCheck the console for more info.`,
+            flags: MessageFlags.Ephemeral,
           });
         } else {
           await interaction.reply({
-            content: `⚠️ There was an error while executing this command: \n${error.message} \nCheck the console for more info.`,
-            ephemeral: true,
+            content: `⚠️ There was an error while executing this command:\n${message}\nCheck the console for more info.`,
+            flags: MessageFlags.Ephemeral,
           });
         }
       }

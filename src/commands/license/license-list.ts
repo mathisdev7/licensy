@@ -6,6 +6,7 @@ import {
   EmbedBuilder,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 
 import pkg from "lodash";
@@ -45,7 +46,7 @@ export default {
         .setStyle(ButtonStyle.Secondary);
 
       const interactionReplied = await interaction.deferReply({
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
 
       let keysSliced = [];
@@ -63,7 +64,7 @@ export default {
         )
         .setLabel(`Copy License Key${licenses.length > 1 ? "s" : ""}`)
         .setStyle(ButtonStyle.Primary);
-      const row = new ActionRowBuilder<any>().addComponents(
+      const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
         button,
         buttonLeftArrow,
         buttonRightArrow

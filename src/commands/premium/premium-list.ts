@@ -2,6 +2,7 @@ import {
   EmbedBuilder,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 
 import type { Command } from "../../structures/command.js";
@@ -28,7 +29,7 @@ export default {
       if (!ALLOWED_USERS.includes(interaction.user.id)) {
         interaction.reply({
           content: "You are not allowed to use this command.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
@@ -71,7 +72,7 @@ export default {
         .setTimestamp();
       interaction.reply({
         embeds: [embed],
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       prisma.$disconnect();
     } catch (error) {

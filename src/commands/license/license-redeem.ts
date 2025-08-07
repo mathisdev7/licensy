@@ -3,10 +3,12 @@ import {
   EmbedBuilder,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 import parseMs from "parse-ms-2";
 
 import type { Command } from "../../structures/command.js";
+import { ExtendedClient } from "../../structures/client.js";
 
 export default {
   data: {
@@ -42,12 +44,12 @@ export default {
         interaction.reply({
           content:
             "The license key provided does not exist or has already been redeemed.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         return;
       }
       const interactionReplied = await interaction.deferReply({
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       const fetchAuthor = await interaction.client.users.fetch(license.author);
       const licenseCreatedAtToMs = license.createdAt.getTime();
@@ -139,7 +141,7 @@ export default {
       await interaction.member.roles.add(license.role, "License redeemed.");
       interaction.client.emit(
         "licenseRedeem",
-        interaction.client,
+        interaction.client as ExtendedClient,
         license,
         interaction.guild,
         time,

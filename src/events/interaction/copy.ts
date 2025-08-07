@@ -1,4 +1,4 @@
-import { Events } from "discord.js";
+import { Events, MessageFlags } from "discord.js";
 
 import type { Event } from "../../structures/event.js";
 
@@ -12,7 +12,7 @@ export default {
         const keys = interaction.customId.split("-").slice(3);
         interaction.reply({
           content: "I've sent you the license keys in DMs to copy them.",
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         interaction.user.send(keys.join("\n"));
         return;
@@ -20,7 +20,7 @@ export default {
       const key = interaction.customId.split("-")[3];
       interaction.reply({
         content: "I've sent you the license key in DMs to copy it.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       interaction.user.send(`${key}`);
       return;

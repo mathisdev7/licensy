@@ -1,13 +1,15 @@
-import { EmbedBuilder, Guild } from "discord.js";
+import { EmbedBuilder, Guild, TextChannel } from "discord.js";
 import ms from "ms";
 import parseMs from "parse-ms-2";
+import { ExtendedClient } from "../../structures/client.js";
+import type { Event } from "../../structures/event.js";
 import { licenseData } from "../../types/licenseData.js";
 
 export default {
   name: "licenseCreate",
   once: false,
   async execute(
-    client: any,
+    client: ExtendedClient,
     licenseData: licenseData[],
     guild: Guild,
     time: string
@@ -52,8 +54,10 @@ export default {
         .setColor("#2f3136")
         .setTimestamp()
         .setFooter({ text: "Licensy v3 - Logs" });
-      logChannel.send({ embeds: [embed] });
+      if (logChannel instanceof TextChannel) {
+        logChannel.send({ embeds: [embed] });
+      }
       prisma.$disconnect();
     }
   },
-} satisfies any;
+} satisfies Event<"licenseCreate">;

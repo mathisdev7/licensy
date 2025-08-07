@@ -1,6 +1,7 @@
 import {
   ApplicationCommandOptionType,
   ChatInputCommandInteraction,
+  MessageFlags,
   RESTJSONErrorCodes,
 } from "discord.js";
 
@@ -51,7 +52,7 @@ export default {
           });
           interaction.reply({
             content: `The license logs channel has been set to <#${logsChannel.id}>.\nTo deactivate the license logs, use \`/license-logs activate:False\``,
-            ephemeral: true,
+            flags: MessageFlags.Ephemeral,
           });
           prisma.$disconnect();
           return;
@@ -60,7 +61,7 @@ export default {
           prisma.$disconnect();
           interaction.reply({
             content: `The license logs channel is already set to <#${logsChannel.id}>.`,
-            ephemeral: true,
+            flags: MessageFlags.Ephemeral,
           });
           return;
         }
@@ -70,7 +71,7 @@ export default {
         });
         interaction.reply({
           content: `The license logs channel has been set to <#${logsChannel.id}>.\nTo deactivate the license logs, use \`/license-logs activate:False\``,
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         prisma.$disconnect();
         return;
@@ -84,7 +85,7 @@ export default {
           prisma.$disconnect();
           interaction.reply({
             content: `Please provide a channel to set as the license logs channel.`,
-            ephemeral: true,
+            flags: MessageFlags.Ephemeral,
           });
           return;
         }
@@ -94,7 +95,7 @@ export default {
             content: `The license logs are already ${
               activate ? "activated" : "deactivated"
             }.`,
-            ephemeral: true,
+            flags: MessageFlags.Ephemeral,
           });
           return;
         }
@@ -106,14 +107,14 @@ export default {
           content: `The license logs have been ${
             activate ? "activated" : "deactivated"
           }.`,
-          ephemeral: true,
+          flags: MessageFlags.Ephemeral,
         });
         prisma.$disconnect();
         return;
       }
       interaction.reply({
         content: "Please provide a channel to set as the license logs channel.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       prisma.$disconnect();
     } catch (error) {

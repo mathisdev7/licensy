@@ -1,50 +1,65 @@
 import {
-	PermissionsBitField,
-	REST,
-	Routes,
-	type APIEmbed,
-	type Message,
-	type PermissionResolvable,
-	type PermissionsString,
-	type RESTPostAPIApplicationCommandsJSONBody,
-	type RESTPostAPIApplicationGuildCommandsJSONBody,
-	type RESTPutAPIApplicationCommandsJSONBody,
-	type RESTPutAPIApplicationGuildCommandsJSONBody,
+    Guild,
+    GuildMember,
+    PermissionsBitField,
+    REST,
+    Routes,
+    User,
+    type APIEmbed,
+    type Message,
+    type PermissionResolvable,
+    type PermissionsString,
+    type RESTPostAPIApplicationCommandsJSONBody,
+    type RESTPostAPIApplicationGuildCommandsJSONBody,
+    type RESTPutAPIApplicationCommandsJSONBody,
+    type RESTPutAPIApplicationGuildCommandsJSONBody,
 } from "discord.js";
 import { readdirSync, type PathLike } from "node:fs";
 import { join } from "node:path";
 import { URL, fileURLToPath, pathToFileURL } from "node:url";
 
 import { ErrorConfig, logError } from "../config/errorHandling.js";
+import { ExtendedClient } from "../structures/client.js";
 import type { Command } from "../structures/command.js";
 
-export async function dynamicImport(path: string): Promise<any> {
+export async function dynamicImport<T extends object = object>(
+  path: string
+): Promise<T> {
   const module = await import(pathToFileURL(path).toString());
-  return module?.default;
+  return module?.default as T;
 }
 
-export async function loadStructures(path: PathLike, props: [string, string]) {
-  const fileData = [];
-
+export async function loadStructures<T extends object>(
+  path: PathLike,
+  props: [string, string]
+): Promise<T[]> {
   const folders = readdirSync(path);
+  const importPaths: string[] = [];
 
   for (const folder of folders) {
     const filesPath = join(path.toString(), folder);
     const files = readdirSync(filesPath).filter((file) => file.endsWith(".js"));
-
     for (const file of files) {
-      const filePath = join(filesPath, file);
-      const data = await dynamicImport(filePath);
-
-      if (props[0] in data && props[1] in data) fileData.push(data);
-      else
-        console.warn(
-          `\u001b[33m The command at ${filePath} is missing a required ${props[0]} or ${props[1]} property.`
-        );
+      importPaths.push(join(filesPath, file));
     }
   }
 
-  return fileData;
+  const modules: Array<{ filePath: string; data: T | undefined }> = await Promise.all(
+    importPaths.map(async (filePath) => {
+      try {
+        const data = await dynamicImport<T>(filePath);
+        return { filePath, data };
+      } catch (err) {
+        console.warn(`Failed to import ${filePath}:`, err);
+        return { filePath, data: undefined };
+      }
+    })
+  );
+
+  return modules
+    .filter((m): m is { filePath: string; data: T } => m.data !== undefined)
+    .map((m) => m.data)
+    .filter((data) => props[0] in (data as object) && props[1] in (data as object));
 }
 
 export function missingPerms(
@@ -150,39 +165,40 @@ export async function deployCommands(guildId?: string) {
 
   const rest = new REST().setToken(process.env.DISCORD_TOKEN);
 
-  (async () => {
-    try {
+  try {
+    console.log(
+      `Started refreshing ${commands.length} application (/) commands.`
+    );
+
+    let data:
+      | RESTPutAPIApplicationCommandsJSONBody[]
+      | RESTPutAPIApplicationGuildCommandsJSONBody[] = [];
+
+    if (guildId) {
+      data = (await rest.put(
+        Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId),
+        { body: commands }
+      )) as RESTPutAPIApplicationGuildCommandsJSONBody[];
       console.log(
-        `Started refreshing ${commands.length} application (/) commands.`
+        `Successfully reloaded ${data.length} application (/) commands in guild ${guildId}.`
       );
-
-      let data:
-        | RESTPutAPIApplicationCommandsJSONBody[]
-        | RESTPutAPIApplicationGuildCommandsJSONBody[] = [];
-
-      if (guildId) {
-        data = (await rest.put(
-          Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId),
-          { body: commands }
-        )) as RESTPutAPIApplicationGuildCommandsJSONBody[];
-        console.log(
-          `Successfully reloaded ${data.length} application (/) commands in guild ${guildId}.`
-        );
-        return;
-      }
-      data = (await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
-        body: commands,
-      })) as RESTPutAPIApplicationCommandsJSONBody[];
-
-      console.log(
-        `Successfully reloaded ${data.length} application (/) commands ${
-          process.env.GUILD_ID ? `in guild ${process.env.GUILD_ID}` : ""
-        }.`
-      );
-    } catch (error) {
-      console.error(error);
+      return;
     }
-  })();
+    data = (await rest.put(
+      Routes.applicationCommands(process.env.CLIENT_ID),
+      {
+        body: commands,
+      }
+    )) as RESTPutAPIApplicationCommandsJSONBody[];
+
+    console.log(
+      `Successfully reloaded ${data.length} application (/) commands ${
+        process.env.GUILD_ID ? `in guild ${process.env.GUILD_ID}` : ""
+      }.`
+    );
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export function generateRandomKey(length: number): string {
@@ -195,59 +211,78 @@ export function generateRandomKey(length: number): string {
   return key;
 }
 
-export async function safeFetchMember(guild: any, userId: string) {
+export async function safeFetchMember(
+  guild: Guild,
+  userId: string
+): Promise<GuildMember | null> {
   try {
     return await guild.members.fetch(userId);
   } catch (error) {
     if (error.code === ErrorConfig.discordErrorCodes.UNKNOWN_MEMBER) {
-      logError(`Member ${userId} not found in guild ${guild.id}`, error, 'warn');
+      logError(
+        `Member ${userId} not found in guild ${guild.id}`,
+        error,
+        "warn"
+      );
     } else if (error.code === ErrorConfig.discordErrorCodes.UNKNOWN_GUILD) {
-      logError(`Guild ${guild.id} not found`, error, 'warn');
+      logError(`Guild ${guild.id} not found`, error, "warn");
     } else {
-      logError(`Error fetching member ${userId}`, error, 'warn');
+      logError(`Error fetching member ${userId}`, error, "warn");
     }
     return null;
   }
 }
 
-export async function safeFetchGuild(client: any, guildId: string) {
+export async function safeFetchGuild(client: ExtendedClient, guildId: string) {
   try {
     return await client.guilds.fetch(guildId);
   } catch (error) {
     if (error.code === ErrorConfig.discordErrorCodes.UNKNOWN_GUILD) {
-      logError(`Guild ${guildId} not found`, error, 'warn');
+      logError(`Guild ${guildId} not found`, error, "warn");
     } else {
-      logError(`Error fetching guild ${guildId}`, error, 'warn');
+      logError(`Error fetching guild ${guildId}`, error, "warn");
     }
     return null;
   }
 }
 
-export async function safeSendDM(user: any, content: string | object) {
+export async function safeSendDM(user: User, content: string | object) {
   try {
     await user.send(content);
     return true;
   } catch (error) {
     if (error.code === ErrorConfig.discordErrorCodes.CANNOT_SEND_DM) {
-      logError(`Cannot send DM to user ${user.tag}: DMs disabled`, error, 'warn');
+      logError(
+        `Cannot send DM to user ${user.tag}: DMs disabled`,
+        error,
+        "warn"
+      );
     } else {
-      logError(`Error sending DM to user ${user.tag}`, error, 'warn');
+      logError(`Error sending DM to user ${user.tag}`, error, "warn");
     }
     return false;
   }
 }
 
-export async function safeRemoveRole(member: any, roleId: string) {
+export async function safeRemoveRole(member: GuildMember, roleId: string) {
   try {
     await member.roles.remove(roleId);
     return true;
   } catch (error) {
     if (error.code === ErrorConfig.discordErrorCodes.MISSING_PERMISSIONS) {
-      logError(`Missing permissions to remove role ${roleId} from ${member.user.tag}`, error, 'warn');
+      logError(
+        `Missing permissions to remove role ${roleId} from ${member.user.tag}`,
+        error,
+        "warn"
+      );
     } else if (error.code === ErrorConfig.discordErrorCodes.UNKNOWN_ROLE) {
-      logError(`Role ${roleId} not found`, error, 'warn');
+      logError(`Role ${roleId} not found`, error, "warn");
     } else {
-      logError(`Error removing role ${roleId} from ${member.user.tag}`, error, 'warn');
+      logError(
+        `Error removing role ${roleId} from ${member.user.tag}`,
+        error,
+        "warn"
+      );
     }
     return false;
   }
@@ -259,25 +294,38 @@ export function isExpired(validUntil: number): boolean {
   return timeDifference <= 0;
 }
 
-export function manageExpiringOnReady(client: any) {
+export function manageExpiringOnReady(client: ExtendedClient) {
   try {
     setInterval(async () => {
       const prisma = client.prisma;
-      const licenses = await prisma.license.findMany();
+      const now = BigInt(Date.now());
+      const licenses = await prisma.license.findMany({
+        where: {
+          validUntil: { lte: now },
+        },
+      });
       for (const license of licenses) {
         try {
           if (license.activated === false && !license.redeemer) continue;
           if (isExpired(Number(license.validUntil))) {
             const guild = await safeFetchGuild(client, license.guildId);
             if (!guild) {
-              logError(`Guild ${license.guildId} not found, deleting license ${license.key}`, null, 'warn');
+              logError(
+                `Guild ${license.guildId} not found, deleting license ${license.key}`,
+                null,
+                "warn"
+              );
               await prisma.license.delete({ where: { key: license.key } });
               continue;
             }
 
-            const member = await safeFetchMember(guild, license.redeemer);
+            const member = await safeFetchMember(guild, license.redeemer!);
             if (!member) {
-              logError(`Member ${license.redeemer} not found in guild ${license.guildId}, deleting license ${license.key}`, null, 'warn');
+              logError(
+                `Member ${license.redeemer} not found in guild ${license.guildId}, deleting license ${license.key}`,
+                null,
+                "warn"
+              );
               await prisma.license.delete({ where: { key: license.key } });
               continue;
             }
@@ -301,33 +349,50 @@ export function manageExpiringOnReady(client: any) {
             });
           }
         } catch (licenseError) {
-          logError(`Error processing license ${license.key}`, licenseError, 'error');
+          logError(
+            `Error processing license ${license.key}`,
+            licenseError,
+            "error"
+          );
         }
       }
     }, 10000);
   } catch (error) {
-    logError(`Erreur lors de la gestion des expirations de licence`, error, 'error');
+    logError(
+      `Erreur lors de la gestion des expirations de licence`,
+      error,
+      "error"
+    );
   }
 }
 
-export function managePremiumOnReady(client: any) {
+export function managePremiumOnReady(client: ExtendedClient) {
   try {
     setInterval(async () => {
       const prisma = client.prisma;
-      const premiums = await prisma.premium.findMany();
+      const now = BigInt(Date.now());
+      const premiums = await prisma.premium.findMany({
+        where: {
+          validUntil: { lte: now },
+        },
+      });
       for (const premium of premiums) {
         try {
           if (isExpired(Number(premium.validUntil))) {
             const guild = await safeFetchGuild(client, premium.guildId);
             if (!guild) {
-              console.warn(`Guild ${premium.guildId} not found, deleting premium ${premium.id}`);
+              console.warn(
+                `Guild ${premium.guildId} not found, deleting premium ${premium.id}`
+              );
               await prisma.premium.delete({ where: { id: premium.id } });
               continue;
             }
 
             const member = await safeFetchMember(guild, premium.userId);
             if (!member) {
-              console.warn(`Member ${premium.userId} not found in guild ${premium.guildId}, deleting premium ${premium.id}`);
+              console.warn(
+                `Member ${premium.userId} not found in guild ${premium.guildId}, deleting premium ${premium.id}`
+              );
               await prisma.premium.delete({ where: { id: premium.id } });
               continue;
             }
@@ -343,7 +408,9 @@ export function managePremiumOnReady(client: any) {
             });
           }
         } catch (premiumError) {
-          console.error(`Error processing premium ${premium.id}: ${premiumError}`);
+          console.error(
+            `Error processing premium ${premium.id}: ${premiumError}`
+          );
         }
       }
     }, 10000);

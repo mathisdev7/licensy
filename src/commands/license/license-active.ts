@@ -5,6 +5,7 @@ import {
   EmbedBuilder,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
+  MessageFlags,
 } from "discord.js";
 
 import type { Command } from "../../structures/command.js";
@@ -36,7 +37,7 @@ export default {
         .setLabel(`Copy License Key${licenses.length > 1 ? "s" : ""}`)
         .setStyle(ButtonStyle.Primary);
 
-      const row = new ActionRowBuilder<any>().addComponents(button);
+      const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
       const embed = new EmbedBuilder()
         .setTitle("Unredeemed Licenses")
         .setDescription(
@@ -53,7 +54,7 @@ export default {
       interaction.reply({
         embeds: [embed],
         components: [row],
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       prisma.$disconnect();
     } catch (error) {

@@ -29,12 +29,12 @@ const commandFiles: Command[] = await loadStructures(commandFolderPath, [
 ]);
 
 for (const command of commandFiles) {
-  if (command.opt.category !== "Premium") {
+  if ((command.opt?.category ?? "General") !== "Premium") {
     commands.push(command.data);
   }
 }
 for (const command of commandFiles) {
-  if (command.opt.category === "Premium") {
+  if ((command.opt?.category ?? "General") === "Premium") {
     premiumCommands.push(command.data);
   }
 }

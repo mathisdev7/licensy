@@ -3,6 +3,7 @@ import {
 	RESTJSONErrorCodes,
 	Routes,
 	type ChatInputCommandInteraction,
+	MessageFlags,
 } from "discord.js";
 
 import type { Command } from "../../structures/command.js";
@@ -39,7 +40,7 @@ export default {
         }));
 		const guildId = interaction.options.getString("guild") || interaction.guildId;
 		if (guildId && interaction.user.id !== "548028946097111045") {
-			await interaction.reply({ content: "You can only deploy commands to the server you are in.", ephemeral: true });
+			await interaction.reply({ content: "You can only deploy commands to the server you are in.", flags: MessageFlags.Ephemeral });
 			return;
 		}
 		if (guildId && interaction.user.id === "548028946097111045") {
@@ -53,7 +54,7 @@ export default {
       Routes.applicationGuildCommands(interaction.client.user.id, interaction.guildId),
       { body: commandsToDeploy }
     );
-		await interaction.reply({ content: "Commands deployed successfully", ephemeral: true });
+		await interaction.reply({ content: "Commands deployed successfully", flags: MessageFlags.Ephemeral });
 	  } catch (error) {
 		if ((error).code === RESTJSONErrorCodes.UnknownMessage) {
 		  console.error(`Failed to edit interaction: ${(error).message}`);
