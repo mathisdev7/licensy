@@ -93,11 +93,19 @@ export default {
         });
         return;
       }
-      const licenseData: licenseData[] = [];
       const maxAmount = Math.min(
         amount,
         isPremium ? MAX_LICENSES_PER_COMMAND_PREMIUM : MAX_LICENSES_PER_COMMAND
       );
+
+      const interactionReplied = await interaction.deferReply({
+        flags: MessageFlags.Ephemeral,
+      });
+      await interactionReplied.edit({
+        content: `Generating ${maxAmount} license${maxAmount > 1 ? "s" : ""}...`,
+      });
+
+      const licenseData: licenseData[] = [];
       for (let i = 0; i < maxAmount; i++) {
         const randomKey = generateRandomKey(16);
         const licenseKey = await prisma.license.create({
@@ -129,9 +137,9 @@ export default {
         .setColor("#2f3136")
         .setTimestamp()
         .setFooter({ text: "Licensy v3" });
-      interaction.reply({
+      interactionReplied.edit({
+        content: "",
         embeds: [embed],
-        flags: MessageFlags.Ephemeral,
       });
       interaction.client.emit(
         "licenseCreate",

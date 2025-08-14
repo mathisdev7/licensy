@@ -1,8 +1,12 @@
 import { ActivityType, Events } from "discord.js";
 
-import { manageExpiringOnReady, managePremiumOnReady } from "../../misc/util.js";
-import type { Event } from "../../structures/event.js";
+import {
+  deployCommands,
+  manageExpiringOnReady,
+  managePremiumOnReady,
+} from "../../misc/util.js";
 import type { ExtendedClient } from "../../structures/client.js";
+import type { Event } from "../../structures/event.js";
 
 export default {
   name: Events.ClientReady,
@@ -17,6 +21,7 @@ export default {
       }, 15000);
       manageExpiringOnReady(client as ExtendedClient);
       managePremiumOnReady(client as ExtendedClient);
+      deployCommands();
     } catch (error) {
       console.error(error);
     }

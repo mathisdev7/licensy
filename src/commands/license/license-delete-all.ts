@@ -28,7 +28,7 @@ export default {
           activated: false,
         },
       });
-      if (licenses.length < 0) {
+      if (licenses.length === 0) {
         prisma.$disconnect();
         interaction.reply({
           content: "There is no licenses keys in the database.",

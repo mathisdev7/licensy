@@ -2,7 +2,7 @@
 
 A powerful Discord bot for managing license keys and premium memberships within your Discord server.
 
-## 💝 Developer Note
+## Developer Note
 
 Hey everyone! 👋
 
@@ -10,15 +10,15 @@ I want to be transparent with the Licensy community. Due to time constraints, I'
 
 **What this means:**
 
-- 🎉 Pull requests are more than welcome!
-- 🔄 I'll still push updates when I can, even if not as frequently
-- 🤝 The community can help improve and maintain the bot
-- ❤️ Much love to all Licensy users - thank you for your support!
+- Pull requests are more than welcome!
+- I'll still push updates when I can, even if not as frequently
+- The community can help improve and maintain the bot
+- Much love to all Licensy users - thank you for your support!
 
 **Want to use the official bot?**
 [**🤖 Invite Licensy to your server**](https://discord.com/api/oauth2/authorize?client_id=971970180353777714&permissions=8&scope=bot%20applications.commands)
 
-**Show your support!** ⭐
+**Show your support!**
 If you find Licensy useful, please consider starring this repository - it really helps and motivates me to keep working on the project!
 
 Thank you for understanding and for being part of the Licensy community! 💙
@@ -252,6 +252,7 @@ If you encounter any issues or have questions:
 
 - GitHub: [@mathisdev7](https://github.com/mathisdev7)
 - Discord: frost.wrld
+- Portfolio: [mathisdev.pro](https://mathisdev.pro)
 
 ## 📄 License
 
