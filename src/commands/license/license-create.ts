@@ -1,20 +1,21 @@
 import {
   ApplicationCommandOptionType,
   EmbedBuilder,
+  MessageFlags,
+  PermissionsBitField,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
-  MessageFlags,
 } from "discord.js";
 import ms from "ms";
 import parseMs from "parse-ms-2";
 import { generateRandomKey } from "../../misc/util.js";
+import type { ExtendedClient } from "../../structures/client.js";
 import { Command } from "../../structures/command.js";
 import { licenseData } from "../../types/licenseData.js";
-import type { ExtendedClient } from "../../structures/client.js";
-const MAX_LICENSES = 50;
-const MAX_LICENSES_PER_COMMAND = 10;
-const MAX_LICENSES_PREMIUM = 200;
-const MAX_LICENSES_PER_COMMAND_PREMIUM = 30;
+const MAX_LICENSES = 200;
+const MAX_LICENSES_PER_COMMAND = 30;
+const MAX_LICENSES_PREMIUM = 1000;
+const MAX_LICENSES_PER_COMMAND_PREMIUM = 100;
 
 export default {
   data: {
@@ -42,7 +43,7 @@ export default {
     ],
   },
   opt: {
-    userPermissions: ["Administrator"],
+    userPermissions: [],
     botPermissions: ["SendMessages"],
     category: "License",
     cooldown: 5,
@@ -63,6 +64,35 @@ export default {
         return;
       }
       const prisma = interaction.client.prisma;
+      const managerRoles = await prisma.licenseManager.findMany({
+        where: { guildId: interaction.guild.id },
+        select: { roleId: true },
+      });
+      const member = interaction.member;
+      const hasAdminPermission = member.permissions.has(
+        PermissionsBitField.Flags.Administrator
+      );
+      const hasManagerRole = member.roles.cache.some((memberRole) =>
+        managerRoles.some((managerRole) => managerRole.roleId === memberRole.id)
+      );
+      if (!hasAdminPermission && managerRoles.length > 0 && !hasManagerRole) {
+        await prisma.$disconnect();
+        interaction.reply({
+          content:
+            "You must be an administrator or have a configured role to create license keys.",
+          flags: MessageFlags.Ephemeral,
+        });
+        return;
+      }
+      if (!hasAdminPermission && managerRoles.length === 0) {
+        await prisma.$disconnect();
+        interaction.reply({
+          content:
+            "Only administrators can create license keys until roles are configured.",
+          flags: MessageFlags.Ephemeral,
+        });
+        return;
+      }
       const licenses = await prisma.license.findMany({
         where: {
           guildId: interaction.guild.id,
@@ -102,7 +132,9 @@ export default {
         flags: MessageFlags.Ephemeral,
       });
       await interactionReplied.edit({
-        content: `Generating ${maxAmount} license${maxAmount > 1 ? "s" : ""}...`,
+        content: `Generating ${maxAmount} license${
+          maxAmount > 1 ? "s" : ""
+        }...`,
       });
 
       const licenseData: licenseData[] = [];
@@ -116,6 +148,16 @@ export default {
             author: interaction.user.id,
             validUntil: Date.now() + ms(time),
             activated: false,
+          },
+        });
+        await prisma.licenseHistory.create({
+          data: {
+            guildId: interaction.guild.id,
+            licenseKey: licenseKey.key,
+            action: "CREATE",
+            actorId: interaction.user.id,
+            targetId: role.id,
+            details: `Role: <@&${role.id}> | Created by <@${interaction.user.id}>`,
           },
         });
         licenseData.push(licenseKey);

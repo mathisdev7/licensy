@@ -1,26 +1,19 @@
 import {
-    Guild,
-    GuildMember,
-    PermissionsBitField,
-    REST,
-    Routes,
-    User,
-    type APIEmbed,
-    type Message,
-    type PermissionResolvable,
-    type PermissionsString,
-    type RESTPostAPIApplicationCommandsJSONBody,
-    type RESTPostAPIApplicationGuildCommandsJSONBody,
-    type RESTPutAPIApplicationCommandsJSONBody,
-    type RESTPutAPIApplicationGuildCommandsJSONBody,
+  Guild,
+  GuildMember,
+  PermissionsBitField,
+  User,
+  type APIEmbed,
+  type Message,
+  type PermissionResolvable,
+  type PermissionsString,
 } from "discord.js";
 import { readdirSync, type PathLike } from "node:fs";
 import { join } from "node:path";
-import { URL, fileURLToPath, pathToFileURL } from "node:url";
+import { pathToFileURL } from "node:url";
 
 import { ErrorConfig, logError } from "../config/errorHandling.js";
 import { ExtendedClient } from "../structures/client.js";
-import type { Command } from "../structures/command.js";
 
 export async function dynamicImport<T extends object = object>(
   path: string
@@ -44,22 +37,25 @@ export async function loadStructures<T extends object>(
     }
   }
 
-  const modules: Array<{ filePath: string; data: T | undefined }> = await Promise.all(
-    importPaths.map(async (filePath) => {
-      try {
-        const data = await dynamicImport<T>(filePath);
-        return { filePath, data };
-      } catch (err) {
-        console.warn(`Failed to import ${filePath}:`, err);
-        return { filePath, data: undefined };
-      }
-    })
-  );
+  const modules: Array<{ filePath: string; data: T | undefined }> =
+    await Promise.all(
+      importPaths.map(async (filePath) => {
+        try {
+          const data = await dynamicImport<T>(filePath);
+          return { filePath, data };
+        } catch (err) {
+          console.warn(`Failed to import ${filePath}:`, err);
+          return { filePath, data: undefined };
+        }
+      })
+    );
 
   return modules
     .filter((m): m is { filePath: string; data: T } => m.data !== undefined)
     .map((m) => m.data)
-    .filter((data) => props[0] in (data as object) && props[1] in (data as object));
+    .filter(
+      (data) => props[0] in (data as object) && props[1] in (data as object)
+    );
 }
 
 export function missingPerms(
@@ -144,61 +140,6 @@ export function formatMessageToEmbed(message: Message<true>) {
   }
 
   return embed;
-}
-
-export async function deployCommands(guildId?: string) {
-  const commands: (
-    | RESTPostAPIApplicationCommandsJSONBody
-    | RESTPostAPIApplicationGuildCommandsJSONBody
-  )[] = [];
-
-  const commandFolderPath = fileURLToPath(
-    new URL("../commands", import.meta.url)
-  );
-  const commandFiles: Command[] = await loadStructures(commandFolderPath, [
-    "data",
-    "execute",
-  ]);
-  commandFiles.forEach((command) => {
-    commands.push(command.data);
-  });
-
-  const rest = new REST().setToken(process.env.DISCORD_TOKEN);
-
-  try {
-    console.log(
-      `Started refreshing ${commands.length} application (/) commands.`
-    );
-
-    let data:
-      | RESTPutAPIApplicationCommandsJSONBody[]
-      | RESTPutAPIApplicationGuildCommandsJSONBody[] = [];
-
-    if (guildId) {
-      data = (await rest.put(
-        Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId),
-        { body: commands }
-      )) as RESTPutAPIApplicationGuildCommandsJSONBody[];
-      console.log(
-        `Successfully reloaded ${data.length} application (/) commands in guild ${guildId}.`
-      );
-      return;
-    }
-    data = (await rest.put(
-      Routes.applicationCommands(process.env.CLIENT_ID),
-      {
-        body: commands,
-      }
-    )) as RESTPutAPIApplicationCommandsJSONBody[];
-
-    console.log(
-      `Successfully reloaded ${data.length} application (/) commands ${
-        process.env.GUILD_ID ? `in guild ${process.env.GUILD_ID}` : ""
-      }.`
-    );
-  } catch (error) {
-    console.error(error);
-  }
 }
 
 export function generateRandomKey(length: number): string {
@@ -341,6 +282,17 @@ export function manageExpiringOnReady(client: ExtendedClient) {
             });
 
             await safeRemoveRole(member, license.role);
+
+            await prisma.licenseHistory.create({
+              data: {
+                guildId: license.guildId,
+                licenseKey: license.key,
+                action: "EXPIRE",
+                actorId: member.id,
+                targetId: license.author,
+                details: `Expired for <@${member.id}> | Created by <@${license.author}>`,
+              },
+            });
 
             await prisma.license.delete({
               where: {

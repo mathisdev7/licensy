@@ -70,6 +70,17 @@ export default {
         },
       });
 
+      await prisma.licenseHistory.create({
+        data: {
+          guildId: interaction.guild.id,
+          licenseKey: license.key,
+          action: "REDEEM",
+          actorId: interaction.user.id,
+          targetId: license.author,
+          details: `Redeemed by <@${interaction.user.id}> | Created by <@${license.author}>`,
+        },
+      });
+
       const time = `${new Date(
         Number(license.validUntil) +
           license.updatedAt.getTime() -

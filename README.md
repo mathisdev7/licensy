@@ -92,13 +92,7 @@ Thank you for understanding and for being part of the Licensy community! 💙
    pnpm dlx prisma generate
    ```
 
-5. **Deploy slash commands**
-
-   ```bash
-   pnpm run deploy
-   ```
-
-6. **Start the bot**
+5. **Start the bot**
    ```bash
    pnpm start
    ```
@@ -148,6 +142,7 @@ Licensy v3 includes a robust error handling system to prevent crashes from commo
 ### Utility Functions
 
 The bot includes several utility functions for safe operations:
+
 - `safeFetchMember()` - Safely fetch guild members
 - `safeFetchGuild()` - Safely fetch guilds
 - `safeSendDM()` - Safely send direct messages
@@ -166,8 +161,8 @@ The bot includes several utility functions for safe operations:
 
 Premium guilds get enhanced limits:
 
-- **Standard**: 50 licenses max, 10 per command
-- **Premium**: 200 licenses max, 30 per command
+- **Standard**: 200 licenses max, 30 per command
+- **Premium**: 1000 licenses max, 100 per command
 
 ## 🎯 Commands
 
@@ -211,7 +206,6 @@ The bot uses PostgreSQL with the following main tables:
 - `pnpm start` - Build and start the bot
 - `pnpm run build` - Compile TypeScript
 - `pnpm run watch` - Watch for changes and recompile
-- `pnpm run deploy` - Deploy slash commands
 - `pnpm run clean` - Clean build directory
 
 ### Project Structure
@@ -252,7 +246,7 @@ If you encounter any issues or have questions:
 
 - GitHub: [@mathisdev7](https://github.com/mathisdev7)
 - Discord: frost.wrld
-- Portfolio: [mathisdev.pro](https://mathisdev.pro)
+- Portfolio: [mathisdev.pro](https://sitham.dev)
 
 ## 📄 License
 

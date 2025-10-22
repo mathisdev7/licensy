@@ -1,5 +1,6 @@
 import {
   ActionRowBuilder,
+  ApplicationCommandOptionType,
   ButtonBuilder,
   ButtonStyle,
   ComponentType,
@@ -18,6 +19,36 @@ export default {
   data: {
     name: "license-list",
     description: "Show the licenses unredeemed yet.",
+    options: [
+      {
+        name: "role",
+        description: "Filter licenses by role to grant.",
+        type: ApplicationCommandOptionType.Role,
+        required: false,
+      },
+      {
+        name: "author",
+        description: "Filter licenses by the creator.",
+        type: ApplicationCommandOptionType.User,
+        required: false,
+      },
+      {
+        name: "sort",
+        description: "Sort order for the licenses.",
+        type: ApplicationCommandOptionType.String,
+        required: false,
+        choices: [
+          {
+            name: "Expiration ascending",
+            value: "expiration_asc",
+          },
+          {
+            name: "Expiration descending",
+            value: "expiration_desc",
+          },
+        ],
+      },
+    ],
   },
   opt: {
     userPermissions: ["Administrator"],
@@ -28,12 +59,38 @@ export default {
   async execute(interaction: ChatInputCommandInteraction<"cached">) {
     try {
       const prisma = interaction.client.prisma;
+      const filterRole = interaction.options.getRole("role");
+      const filterAuthor = interaction.options.getUser("author");
+      const sortOption = interaction.options.getString("sort");
+
+      const orderBy =
+        sortOption === "expiration_desc"
+          ? { validUntil: "desc" as const }
+          : sortOption === "expiration_asc"
+          ? { validUntil: "asc" as const }
+          : { createdAt: "desc" as const };
+
       const licenses = await prisma.license.findMany({
         where: {
           guildId: interaction.guild.id,
           activated: false,
+          ...(filterRole ? { role: filterRole.id } : {}),
+          ...(filterAuthor ? { author: filterAuthor.id } : {}),
         },
+        orderBy,
       });
+
+      if (!licenses.length) {
+        await interaction.reply({
+          content:
+            filterRole || filterAuthor
+              ? "No licenses match the provided filters."
+              : "There are no licenses available.",
+          flags: MessageFlags.Ephemeral,
+        });
+        prisma.$disconnect();
+        return;
+      }
 
       const buttonRightArrow = new ButtonBuilder()
         .setCustomId("right-arrow")
@@ -49,7 +106,7 @@ export default {
         flags: MessageFlags.Ephemeral,
       });
 
-      let keysSliced = [];
+      let keysSliced: licenseData[][] = [];
       const fetchingKeys = new Promise((resolve) => {
         keysSliced = chunk(licenses, 5);
         setTimeout(resolve, licenses.length * 40);
@@ -83,7 +140,7 @@ export default {
         .setColor("#2f3135")
         .setTimestamp()
         .setFooter({
-          text: `Licensy v3 - Page ${currentPage}/${keysSliced.length - 1}`,
+          text: `Licensy v3 - Page ${currentPage + 1}/${keysSliced.length}`,
         });
 
       interactionReplied.edit({
@@ -123,7 +180,7 @@ export default {
             .setColor("#2f3135")
             .setTimestamp()
             .setFooter({
-              text: `Licensy v3 - Page ${currentPage}/${keysSliced.length - 1}`,
+              text: `Licensy v3 - Page ${currentPage + 1}/${keysSliced.length}`,
             });
           buttonInteraction.update({
             embeds: [newEmbed],
@@ -158,7 +215,7 @@ export default {
             .setColor("#2f3135")
             .setTimestamp()
             .setFooter({
-              text: `Licensy v3 - Page ${currentPage}/${keysSliced.length - 1}`,
+              text: `Licensy v3 - Page ${currentPage + 1}/${keysSliced.length}`,
             });
           buttonInteraction.update({
             embeds: [newEmbed],

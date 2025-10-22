@@ -1,7 +1,6 @@
 import { ActivityType, Events } from "discord.js";
 
 import {
-  deployCommands,
   manageExpiringOnReady,
   managePremiumOnReady,
 } from "../../misc/util.js";
@@ -21,7 +20,21 @@ export default {
       }, 15000);
       manageExpiringOnReady(client as ExtendedClient);
       managePremiumOnReady(client as ExtendedClient);
-      deployCommands();
+      const commands = Array.from(client.commands.values())
+        .filter((cmd) => cmd.data.name)
+        .map((cmd) => ({
+          name: cmd.data.name,
+          description:
+            // @ts-expect-error description do exist
+            cmd.data.description || "No description",
+          options: cmd.data.options || [],
+          dm_permission: false,
+          type: 1,
+          integration_types: [0, 1],
+          contexts: [0, 1, 2],
+        }));
+
+      await client.application?.commands.set(commands);
     } catch (error) {
       console.error(error);
     }

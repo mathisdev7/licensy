@@ -11,8 +11,7 @@
     "prebuild": "pnpm run clean",
     "build": "tsc --pretty",
     "watch": "tsc -w",
-    "start": "pnpm run build && pnpm run start:prod",
-    "deploy": "pnpm run build && node --require dotenv/config dist/deploy-commands.js"
+    "start": "pnpm run build && pnpm run start:prod"
   },
   "repository": {
     "type": "git",
