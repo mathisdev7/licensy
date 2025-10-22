@@ -1,4 +1,4 @@
-# Licensy v3 🔑
+# Licensy 🔑
 
 A powerful Discord bot for managing license keys and premium memberships within your Discord server.
 
