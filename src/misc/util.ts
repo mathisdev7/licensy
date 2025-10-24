@@ -370,3 +370,25 @@ export function managePremiumOnReady(client: ExtendedClient) {
     console.error(error);
   }
 }
+
+const WEBHOOK_URL = process.env.WEBHOOK_URL || "";
+
+export async function sendWebhookLog(
+  content: string,
+  embeds?: APIEmbed[]
+): Promise<void> {
+  try {
+    await fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content,
+        embeds: embeds ?? [],
+      }),
+    });
+  } catch (error) {
+    console.error("Failed to send webhook log:", error);
+  }
+}

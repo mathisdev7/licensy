@@ -1,5 +1,5 @@
 # Base stage
-FROM node:22-alpine AS base
+FROM node:20-alpine AS base
 RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 
@@ -12,16 +12,17 @@ RUN pnpm install --frozen-lockfile
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN pnpm prisma generate
 RUN pnpm run build
 
 # Production stage
 FROM base AS production
 ENV NODE_ENV=production
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
-COPY package.json ./
+COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma
+RUN pnpm install --prod --frozen-lockfile
 RUN pnpm prisma generate
+COPY --from=builder /app/dist ./dist
 CMD ["node", "--require", "dotenv/config", "dist/index.js"]
 
 # Development stage

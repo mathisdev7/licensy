@@ -50,7 +50,6 @@ export default {
         return;
       }
 
-      // Normalize data for export (avoid BigInt serialization issues)
       const normalized = licenses.map((lic) => ({
         id: lic.id,
         guildId: lic.guildId,
@@ -105,7 +104,9 @@ export default {
       }
 
       await interactionReplied.edit({
-        content: `Exported ${licenses.length} license${licenses.length > 1 ? "s" : ""} as ${format.toUpperCase()}.`,
+        content: `Exported ${licenses.length} license${
+          licenses.length > 1 ? "s" : ""
+        } as ${format.toUpperCase()}.`,
         files: [
           {
             attachment: attachmentBuffer,
@@ -122,7 +123,8 @@ export default {
 } satisfies Command;
 
 function escapeCsvField(value: string): string {
-  const needsQuoting = value.includes(",") || value.includes("\n") || value.includes('"');
+  const needsQuoting =
+    value.includes(",") || value.includes("\n") || value.includes('"');
   if (!needsQuoting) return value;
   return '"' + value.replaceAll('"', '""') + '"';
 }

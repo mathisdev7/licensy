@@ -1,6 +1,14 @@
-import { Collection, Events, MessageFlags, TextChannel, bold, inlineCode } from "discord.js";
+import {
+  Collection,
+  EmbedBuilder,
+  Events,
+  MessageFlags,
+  TextChannel,
+  bold,
+  inlineCode,
+} from "discord.js";
 
-import { missingPerms } from "../../misc/util.js";
+import { missingPerms, sendWebhookLog } from "../../misc/util.js";
 
 import type { Event } from "../../structures/event.js";
 
@@ -25,6 +33,46 @@ export default {
       return;
     }
 
+    try {
+      const embed = new EmbedBuilder()
+        .setTitle("📝 Command Executed")
+        .setColor(0x5865f2)
+        .addFields(
+          { name: "Command", value: `\`/${command.data.name}\``, inline: true },
+          {
+            name: "User",
+            value: `${interaction.user.tag} (${interaction.user.id})`,
+            inline: true,
+          },
+          {
+            name: "Guild",
+            value: `${interaction.guild.name} (${interaction.guild.id})`,
+            inline: false,
+          },
+          {
+            name: "Channel",
+            value: `#${interaction.channel?.name ?? "Unknown"}`,
+            inline: true,
+          }
+        )
+        .setTimestamp();
+
+      const options = interaction.options.data
+        .map((opt) => `${opt.name}: ${opt.value}`)
+        .join(", ");
+      if (options) {
+        embed.addFields({
+          name: "Options",
+          value: options.substring(0, 1024),
+          inline: false,
+        });
+      }
+
+      await sendWebhookLog("", [embed.toJSON()]);
+    } catch (webhookError) {
+      console.error("Failed to send command log to webhook:", webhookError);
+    }
+
     if (
       command.opt?.category === "License" &&
       command.data.name !== "license-ban"
@@ -43,9 +91,15 @@ export default {
           await interaction.reply({
             content: `⚠️ You are banned from executing license commands${
               existingBan.expiresAt
-                ? ` until ${existingBan.expiresAt.toLocaleString(interaction.guildLocale)}`
+                ? ` until ${existingBan.expiresAt.toLocaleString(
+                    interaction.guildLocale
+                  )}`
                 : ""
-            }${existingBan.reason ? `\nReason: ${existingBan.reason.slice(0, 300)}` : ""}.`,
+            }${
+              existingBan.reason
+                ? `\nReason: ${existingBan.reason.slice(0, 300)}`
+                : ""
+            }.`,
             flags: MessageFlags.Ephemeral,
           });
           return;
