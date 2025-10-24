@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: licensy-db-prod
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-licensy}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-licensy}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-licensy}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  bot:
+    build:
+      context: .
+      target: production
+    container_name: licensy-bot-prod
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-licensy}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-licensy}?schema=public
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      GUILD_ID: ${GUILD_ID}
+      CLIENT_ID: ${CLIENT_ID}
+      NODE_ENV: production
+    command: sh -c "pnpm prisma migrate deploy && node --require dotenv/config dist/index.js"
+
+volumes:
+  postgres_data_prod:

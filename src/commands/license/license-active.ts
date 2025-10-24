@@ -3,9 +3,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
+  MessageFlags,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
-  MessageFlags,
 } from "discord.js";
 
 import type { Command } from "../../structures/command.js";
@@ -13,7 +13,7 @@ import type { Command } from "../../structures/command.js";
 export default {
   data: {
     name: "license-active",
-    description: "Show the licenses redeemed yet.",
+    description: "Show the active licenses.",
   },
   opt: {
     userPermissions: ["Administrator"],
@@ -39,13 +39,13 @@ export default {
 
       const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
       const embed = new EmbedBuilder()
-        .setTitle("Unredeemed Licenses")
+        .setTitle("Active Licenses")
         .setDescription(
           licenses.length > 0
-            ? `The licenses that have been redeemed yet are:\n\n${licenses
+            ? `The licenses that are currently active are:\n\n${licenses
                 .map((license) => `- \`${license.key}\``)
                 .join("\n")}`
-            : "There are no licenses available."
+            : "There are no active licenses."
         )
         .setColor("#2f3136")
         .setTimestamp()

@@ -1,0 +1,15 @@
+services:
+  bot:
+    build:
+      context: .
+      target: production
+    container_name: licensy-bot-prod
+    restart: always
+    network_mode: "host"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      GUILD_ID: ${GUILD_ID}
+      CLIENT_ID: ${CLIENT_ID}
+      NODE_ENV: production
+    command: sh -c "pnpm prisma migrate deploy && node --require dotenv/config dist/index.js"

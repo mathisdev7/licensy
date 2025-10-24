@@ -25,6 +25,34 @@ export default {
       return;
     }
 
+    if (
+      command.opt?.category === "License" &&
+      command.data.name !== "license-ban"
+    ) {
+      const prisma = interaction.client.prisma;
+      const existingBan = await prisma.licenseBan.findFirst({
+        where: {
+          guildId: interaction.guild.id,
+          userId: interaction.user.id,
+        },
+      });
+      if (existingBan) {
+        if (existingBan.expiresAt && existingBan.expiresAt <= new Date()) {
+          await prisma.licenseBan.delete({ where: { id: existingBan.id } });
+        } else {
+          await interaction.reply({
+            content: `⚠️ You are banned from executing license commands${
+              existingBan.expiresAt
+                ? ` until ${existingBan.expiresAt.toLocaleString(interaction.guildLocale)}`
+                : ""
+            }${existingBan.reason ? `\nReason: ${existingBan.reason.slice(0, 300)}` : ""}.`,
+            flags: MessageFlags.Ephemeral,
+          });
+          return;
+        }
+      }
+    }
+
     if (command.opt?.userPermissions) {
       const channelPermissions = interaction.member.permissionsIn(
         interaction.channel

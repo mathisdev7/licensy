@@ -67,3 +67,16 @@ model LicenseHistory {
   @@index([guildId, createdAt])
   @@index([licenseKey])
 }
+
+model LicenseBan {
+  id        String   @id @default(cuid())
+  guildId   String
+  userId    String
+  reason    String?
+  expiresAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([guildId, userId])
+  @@index([guildId, expiresAt])
+}

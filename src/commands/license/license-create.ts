@@ -12,10 +12,10 @@ import { generateRandomKey } from "../../misc/util.js";
 import type { ExtendedClient } from "../../structures/client.js";
 import { Command } from "../../structures/command.js";
 import { licenseData } from "../../types/licenseData.js";
-const MAX_LICENSES = 200;
-const MAX_LICENSES_PER_COMMAND = 30;
-const MAX_LICENSES_PREMIUM = 1000;
-const MAX_LICENSES_PER_COMMAND_PREMIUM = 100;
+const MAX_LICENSES = 500;
+const MAX_LICENSES_PER_COMMAND = 100;
+const MAX_LICENSES_PREMIUM = 2000;
+const MAX_LICENSES_PER_COMMAND_PREMIUM = 250;
 
 export default {
   data: {

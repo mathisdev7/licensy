@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: licensy-db-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: licensy
+      POSTGRES_PASSWORD: licensy_dev_pass
+      POSTGRES_DB: licensy
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U licensy"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  bot:
+    build:
+      context: .
+      target: development
+    container_name: licensy-bot-dev
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://licensy:licensy_dev_pass@postgres:5432/licensy?schema=public
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      GUILD_ID: ${GUILD_ID}
+      CLIENT_ID: ${CLIENT_ID}
+      NODE_ENV: development
+    volumes:
+      - ./src:/app/src
+      - ./prisma:/app/prisma
+      - /app/node_modules
+    command: sh -c "pnpm prisma migrate deploy && pnpm run start"
+
+volumes:
+  postgres_data_dev:

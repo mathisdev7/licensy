@@ -88,8 +88,8 @@ Thank you for understanding and for being part of the Licensy community! 💙
 4. **Set up the database**
 
    ```bash
-   pnpm dlx prisma migrate deploy
-   pnpm dlx prisma generate
+   pnpm prisma migrate deploy
+   pnpm prisma generate
    ```
 
 5. **Start the bot**
