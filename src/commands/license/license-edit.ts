@@ -1,9 +1,9 @@
 import {
   ApplicationCommandOptionType,
   EmbedBuilder,
-  type ChatInputCommandInteraction,
   MessageFlags,
   RESTJSONErrorCodes,
+  type ChatInputCommandInteraction,
 } from "discord.js";
 import ms from "ms";
 import parseMs from "parse-ms-2";
@@ -51,7 +51,8 @@ export default {
       if (!newRole && !newTimeStr) {
         prisma.$disconnect();
         await interaction.reply({
-          content: "You must provide at least one option to edit (role or time).",
+          content:
+            "You must provide at least one option to edit (role or time).",
           flags: MessageFlags.Ephemeral,
         });
         return;
@@ -81,7 +82,10 @@ export default {
         const clientToMember = interaction.guild.members.cache.get(
           interaction.client.user.id
         );
-        if (clientToMember && clientToMember.roles.highest.comparePositionTo(newRole) <= 0) {
+        if (
+          clientToMember &&
+          clientToMember.roles.highest.comparePositionTo(newRole) <= 0
+        ) {
           prisma.$disconnect();
           await interaction.reply({
             content: "The bot's role is lower than the role you want to set.",
@@ -102,7 +106,9 @@ export default {
           });
           return;
         }
-        dataToUpdate.validUntil = BigInt(license.createdAt.getTime() + newTimeMs);
+        dataToUpdate.validUntil = BigInt(
+          license.createdAt.getTime() + newTimeMs
+        );
       }
 
       const updated = await prisma.license.update({
@@ -112,7 +118,8 @@ export default {
         data: dataToUpdate,
       });
 
-      const durationBase = newTimeMs ?? (Number(updated.validUntil) - updated.createdAt.getTime());
+      const durationBase =
+        newTimeMs ?? Number(updated.validUntil) - updated.createdAt.getTime();
       const duration = `${parseMs(durationBase).days} days, ${
         parseMs(durationBase).hours
       } hours, ${parseMs(durationBase).minutes} minutes, ${
@@ -122,13 +129,11 @@ export default {
       const embed = new EmbedBuilder()
         .setTitle("License Edited")
         .setDescription(
-          `License \`${updated.key}\` has been updated.\n\n- Role: <@&${
-            updated.role
-          }>\n- Duration: ${duration}`
+          `License \`${updated.key}\` has been updated.\n\n- Role: <@&${updated.role}>\n- Duration: ${duration}`
         )
         .setColor("#2f3136")
         .setTimestamp()
-        .setFooter({ text: "Licensy v3" });
+        .setFooter({ text: "Licensy" });
 
       await interaction.reply({
         embeds: [embed],
@@ -136,10 +141,13 @@ export default {
       });
       prisma.$disconnect();
     } catch (error) {
-      if ((error as { code?: number }).code === RESTJSONErrorCodes.UnknownMessage) {
-        console.error(`Failed to edit interaction: ${(error as Error).message}`);
+      if (
+        (error as { code?: number }).code === RESTJSONErrorCodes.UnknownMessage
+      ) {
+        console.error(
+          `Failed to edit interaction: ${(error as Error).message}`
+        );
       }
     }
   },
 } satisfies Command;
-

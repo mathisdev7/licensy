@@ -10,8 +10,8 @@ import {
   type ChatInputCommandInteraction,
 } from "discord.js";
 
-import type { Command } from "../../structures/command.js";
 import pkg from "lodash";
+import type { Command } from "../../structures/command.js";
 
 const { chunk } = pkg;
 
@@ -102,7 +102,8 @@ export default {
       if (!historyEntries.length) {
         prisma.$disconnect();
         await interaction.reply({
-          content: "No license history entries found for the requested filters.",
+          content:
+            "No license history entries found for the requested filters.",
           flags: MessageFlags.Ephemeral,
         });
         return;
@@ -118,7 +119,9 @@ export default {
         historyChunks[pageIndex]
           .map((entry, index) => {
             const actionLabel = ACTION_LABELS[entry.action] ?? entry.action;
-            const actorMention = entry.actorId ? `<@${entry.actorId}>` : "Unknown";
+            const actorMention = entry.actorId
+              ? `<@${entry.actorId}>`
+              : "Unknown";
             const targetMention = entry.targetId
               ? entry.action === "CREATE"
                 ? `<@&${entry.targetId}>`
@@ -144,7 +147,7 @@ When: ${timestamp}${details}`;
           .setColor("#2f3135")
           .setTimestamp()
           .setFooter({
-            text: `Licensy v3 - Page ${pageIndex + 1}/${historyChunks.length}`,
+            text: `Licensy - Page ${pageIndex + 1}/${historyChunks.length}`,
           });
 
       const buildRow = () =>

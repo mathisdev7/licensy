@@ -3,9 +3,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
+  MessageFlags,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
-  MessageFlags,
 } from "discord.js";
 import parseMs from "parse-ms-2";
 
@@ -111,7 +111,7 @@ export default {
         ])
         .setColor("#2f3136")
         .setTimestamp()
-        .setFooter({ text: "Licensy v3" });
+        .setFooter({ text: "Licensy" });
 
       license.activated &&
         embed.addFields([

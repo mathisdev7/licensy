@@ -24,6 +24,8 @@ model License {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   validUntil  BigInt
+  template    LicenseTemplate? @relation(fields: [templateId], references: [id])
+  templateId  String?
 }
 
 model Logs {
@@ -79,4 +81,20 @@ model LicenseBan {
 
   @@unique([guildId, userId])
   @@index([guildId, expiresAt])
+}
+
+model LicenseTemplate {
+  id             String    @id @default(cuid())
+  guildId        String
+  name           String
+  roleId         String
+  durationMs     BigInt
+  stock          Int?
+  generatedCount Int      @default(0)
+  createdBy      String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  licenses       License[]
+
+  @@unique([guildId, name])
 }

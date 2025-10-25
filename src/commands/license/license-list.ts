@@ -5,9 +5,9 @@ import {
   ButtonStyle,
   ComponentType,
   EmbedBuilder,
+  MessageFlags,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
-  MessageFlags,
 } from "discord.js";
 
 import pkg from "lodash";
@@ -140,7 +140,7 @@ export default {
         .setColor("#2f3135")
         .setTimestamp()
         .setFooter({
-          text: `Licensy v3 - Page ${currentPage + 1}/${keysSliced.length}`,
+          text: `Licensy - Page ${currentPage + 1}/${keysSliced.length}`,
         });
 
       interactionReplied.edit({
@@ -180,7 +180,7 @@ export default {
             .setColor("#2f3135")
             .setTimestamp()
             .setFooter({
-              text: `Licensy v3 - Page ${currentPage + 1}/${keysSliced.length}`,
+              text: `Licensy - Page ${currentPage + 1}/${keysSliced.length}`,
             });
           buttonInteraction.update({
             embeds: [newEmbed],
@@ -215,7 +215,7 @@ export default {
             .setColor("#2f3135")
             .setTimestamp()
             .setFooter({
-              text: `Licensy v3 - Page ${currentPage + 1}/${keysSliced.length}`,
+              text: `Licensy - Page ${currentPage + 1}/${keysSliced.length}`,
             });
           buttonInteraction.update({
             embeds: [newEmbed],

@@ -178,7 +178,7 @@ export default {
         )
         .setColor("#2f3136")
         .setTimestamp()
-        .setFooter({ text: "Licensy v3" });
+        .setFooter({ text: "Licensy" });
       interactionReplied.edit({
         content: "",
         embeds: [embed],

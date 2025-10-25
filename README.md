@@ -121,7 +121,7 @@ Make sure your bot has the following permissions:
 
 ## Error Handling & Anti-Crash System
 
-Licensy v3 includes a robust error handling system to prevent crashes from common Discord API errors:
+Licensy includes a robust error handling system to prevent crashes from common Discord API errors:
 
 ### Common Errors Handled
 

@@ -48,7 +48,7 @@ export default {
         ])
         .setColor("#2f3136")
         .setTimestamp()
-        .setFooter({ text: "Licensy v3 - Logs" });
+        .setFooter({ text: "Licensy - Logs" });
       if (logChannel instanceof TextChannel) {
         logChannel.send({ embeds: [embed] });
       }

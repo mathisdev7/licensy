@@ -1,9 +1,9 @@
 import {
   ApplicationCommandOptionType,
   EmbedBuilder,
-  type ChatInputCommandInteraction,
   MessageFlags,
   RESTJSONErrorCodes,
+  type ChatInputCommandInteraction,
 } from "discord.js";
 import ms from "ms";
 import parseMs from "parse-ms-2";
@@ -61,8 +61,7 @@ export default {
       if (!license) {
         prisma.$disconnect();
         await interaction.reply({
-          content:
-            "The license key provided does not exist or is not active.",
+          content: "The license key provided does not exist or is not active.",
           flags: MessageFlags.Ephemeral,
         });
         return;
@@ -99,7 +98,7 @@ export default {
         )
         .setColor("#2f3136")
         .setTimestamp()
-        .setFooter({ text: "Licensy v3" });
+        .setFooter({ text: "Licensy" });
 
       await interaction.reply({
         embeds: [embed],
@@ -107,10 +106,13 @@ export default {
       });
       prisma.$disconnect();
     } catch (error) {
-      if ((error as { code?: number }).code === RESTJSONErrorCodes.UnknownMessage) {
-        console.error(`Failed to edit interaction: ${(error as Error).message}`);
+      if (
+        (error as { code?: number }).code === RESTJSONErrorCodes.UnknownMessage
+      ) {
+        console.error(
+          `Failed to edit interaction: ${(error as Error).message}`
+        );
       }
     }
   },
 } satisfies Command;
-

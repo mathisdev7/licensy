@@ -1,14 +1,14 @@
 import {
   ApplicationCommandOptionType,
   EmbedBuilder,
+  MessageFlags,
   RESTJSONErrorCodes,
   type ChatInputCommandInteraction,
-  MessageFlags,
 } from "discord.js";
 import parseMs from "parse-ms-2";
 
-import type { Command } from "../../structures/command.js";
 import { ExtendedClient } from "../../structures/client.js";
+import type { Command } from "../../structures/command.js";
 
 export default {
   data: {
@@ -144,7 +144,7 @@ export default {
         ])
         .setColor("#2f3136")
         .setTimestamp()
-        .setFooter({ text: "Licensy v3" });
+        .setFooter({ text: "Licensy" });
 
       interactionReplied.edit({
         embeds: [embed],

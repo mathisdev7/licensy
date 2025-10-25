@@ -35,7 +35,7 @@ export default {
         .setTitle("License Commands")
         .setDescription(licenseCommandsList.join("\n"))
         .setColor("Blurple")
-        .setFooter({ text: "Licensy v3" })
+        .setFooter({ text: "Licensy" })
         .setTimestamp();
       await interaction.reply({ embeds: [embed] });
     } catch (error) {

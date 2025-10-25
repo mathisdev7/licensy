@@ -9,4 +9,5 @@ export type licenseData = {
   createdAt: Date;
   updatedAt: Date;
   validUntil: bigint;
+  templateId?: string | null;
 };
