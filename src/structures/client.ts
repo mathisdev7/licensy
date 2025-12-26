@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import { URL, fileURLToPath } from "node:url";
 
@@ -6,6 +5,7 @@ import { loadStructures } from "../misc/util.js";
 
 import type { Command } from "./command.js";
 import type { Event } from "./event.js";
+import { prisma } from "./prisma.js";
 
 export class ExtendedClient extends Client {
   constructor() {
@@ -17,7 +17,7 @@ export class ExtendedClient extends Client {
         timeout: 15_000,
       },
     });
-    this.prisma = new PrismaClient();
+    this.prisma = prisma;
     this.commands = new Collection<string, Command>();
     this.cooldown = new Collection<string, Collection<string, number>>();
   }
@@ -51,20 +51,20 @@ export class ExtendedClient extends Client {
   }
 
   private setupErrorHandlers() {
-    process.on('unhandledRejection', (reason, promise) => {
-      console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    process.on("unhandledRejection", (reason, promise) => {
+      console.error("Unhandled Rejection at:", promise, "reason:", reason);
     });
 
-    process.on('uncaughtException', (error) => {
-      console.error('Uncaught Exception:', error);
+    process.on("uncaughtException", (error) => {
+      console.error("Uncaught Exception:", error);
     });
 
-    this.on('error', (error) => {
-      console.error('Discord client error:', error);
+    this.on("error", (error) => {
+      console.error("Discord client error:", error);
     });
 
-    this.on('warn', (warning) => {
-      console.warn('Discord client warning:', warning);
+    this.on("warn", (warning) => {
+      console.warn("Discord client warning:", warning);
     });
   }
 

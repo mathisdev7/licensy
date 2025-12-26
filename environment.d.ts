@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-type PrismaClient = import("@prisma/client").PrismaClient;
+type PrismaClient = import("./prisma/generated/client.js").PrismaClient;
 
 declare module "discord.js" {
   interface Client {
